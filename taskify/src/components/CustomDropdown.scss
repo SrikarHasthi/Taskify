@@ -1,0 +1,16 @@
+.customDropdown-container {
+    width: 96%;
+    height: 2rem;
+}
+
+.customDropdown-value-container:hover{
+    background-color: rgb(196, 195, 195);
+}
+
+.customDropdown-value-container{
+    padding: 0 0.4rem;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+}

@@ -1,0 +1,103 @@
+.task-popup-heading-container {
+    padding: 3% 3% 2%;
+    border-bottom: 1px solid;
+    font-size: 1.6em;
+    font-family: var(--font-family-poppins,"Poppins");
+    font-weight: 700;
+    display: flex;
+    letter-spacing: -1px;
+}
+
+
+.task-popup-close-icon {
+    width: 1.7rem;
+    position: absolute;
+    right: 0px;
+    padding-right: 0.4rem;
+    cursor: pointer;
+}
+
+.task-popup-fields-container{
+    padding: 2% 3%;
+}
+
+.task-popup-heading{
+    font-size: 1.2em;
+    font-family: var(--font-family-poppins,"Poppins");
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -1px;
+}
+
+.task-popup-addTask-input{
+    display: block;
+    margin: 0;
+    color: inherit;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: inherit;
+    line-height: 1.8;
+    border: 1px solid black;
+    border-radius: 0.4rem;
+    transition: box-shadow 300ms;
+
+    &.task-popup-addTask-time-input {
+        width: 25%;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0.2rem 0.3rem 0.5rem #9db3cd;
+    }
+}
+
+.task-popup-addTask-input-textbox{
+    resize: none;
+}
+
+.task-popup-dropdown{
+    width: 50%;
+    height: 2rem;
+    border: 1px solid black;
+    display: block;
+    margin: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: inherit;
+    line-height: 1.8;
+    border: 1px solid black;
+    border-radius: 0.4rem;
+    transition: box-shadow 300ms;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1%;
+    cursor: pointer;
+}
+
+.task-popup-dropdown-arrow{
+    height: -webkit-fill-available;
+}
+
+.task-popup-dropdown-outer-container{
+    position: absolute;
+    width: 50%;
+    height: 6rem;
+    left: 3%;
+    z-index: 999;
+    top: 72%;
+    width: 49%;
+    border: 1px solid #020202;
+    border-radius: 0.4rem;
+    background-color: white;
+}
+
+.task-popup-dropdown-value-container{
+    padding: 0 0.4rem;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+}
