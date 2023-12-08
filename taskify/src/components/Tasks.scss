@@ -1,0 +1,50 @@
+.tasks-main-container {
+    width: 19rem;
+    height: 42rem;
+    background: #EDF3F3;
+    margin-right: 2rem;
+}
+
+.tasks-section-container {
+    width: 17rem;
+    height: 6rem;
+    background: #CDF0FC;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.tasks-section-summary {
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 0.5rem;
+}
+
+.task-section-bottom {
+    display: flex;
+    height: 2.2rem;
+    justify-content: space-between;
+    padding: 0 1rem 0 0.5rem;
+}
+
+.task-section-bottom-time-conatiner {
+    display: flex;
+    align-items: center;
+}
+
+.task-section-bottom-time {
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.task-section-bottom-icon {
+    height: 69%;
+    margin-left: 0.3rem;
+}
+
+.task-section-bottom-priority {
+
+}

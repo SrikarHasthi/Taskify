@@ -16,4 +16,5 @@ export interface TaskData {
   description: string,
   priority: string,
   time: string,
+  status: string,
 }

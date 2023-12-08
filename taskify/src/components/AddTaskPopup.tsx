@@ -11,9 +11,10 @@ import { TaskData, priorityInterface } from "../Interfaces";
 interface Props {
     setAddTaskPopup: React.Dispatch<React.SetStateAction<boolean>>,
     setTaskData: React.Dispatch<React.SetStateAction<TaskData[]>>,
+    taskData: TaskData[],
 }
 
-const AddTaskPopup = ({setAddTaskPopup}: Props) => {
+const AddTaskPopup = ({setAddTaskPopup, setTaskData, taskData}: Props) => {
     const [priorityValue, setPriorityValue] = useState<priorityInterface>(priorityImages[1])
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
     const [summary, setSummary] = useState<string>("")
@@ -33,12 +34,23 @@ const AddTaskPopup = ({setAddTaskPopup}: Props) => {
         setPriorityValue(data)
         setShowDropdown(false)
     }
+    const handleSubmit = ():void => {
+        setTaskData([...taskData, {
+            id: Date.now(),
+            summary: summary,
+            description: description,
+            priority: priority,
+            time: time,
+            status: "new",
+        }])
+        setAddTaskPopup(false)
+    }
 
     return (
         <div>
             <div className="task-popup-heading-container">
                 <div>New Task</div>
-                <img src={closeIcon} className="task-popup-close-icon" onClick={()=>setAddTaskPopup(false)}/>
+                <img src={closeIcon} className="task-popup-close-icon" onClick={()=>setAddTaskPopup(false)} alt="close icon"/>
             </div>
             <div className="task-popup-fields-container">
                 <div className="task-popup-heading">Summary</div>
@@ -48,16 +60,17 @@ const AddTaskPopup = ({setAddTaskPopup}: Props) => {
                 <div className="task-popup-heading">Priority</div>
                 <div className="task-popup-dropdown" onClick={()=>{setShowDropdown(true)}}>
                 <div  className="task-popup-dropdown-value-container">
-                            <img src={priorityValue.imgSrc} style={{height:"68%"}}/>
+                            <img src={priorityValue.imgSrc} style={{height:"68%"}} alt="priority icon"/>
                             <span style={{paddingLeft:"0.6rem"}}>{capitalizeFirstLetter(priorityValue.value)}</span>
                         </div>
-                    <img src={dropDownArrow}  className="task-popup-dropdown-arrow"/>
+                    <img src={dropDownArrow}  className="task-popup-dropdown-arrow" alt="down icon"/>
                     {showDropdown ? <div className="task-popup-dropdown-outer-container" ref={dropdownRef}>
                         <CustomDropdown changeDropdown={changeDropdown} setPriority={setPriority}/>
                     </div> : ""}      
                 </div>
                 <div className="task-popup-heading">Set Time</div>
                 <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="1d 4h 30m" onChange={(e)=>{setTime(e.target.value)}}/>
+                <button className="task-popup-createTask-button" onClick={()=> handleSubmit()}>Create</button>
             </div>
         </div>
     )

@@ -101,3 +101,26 @@
     align-items: center;
     width: 100%;
 }
+
+.task-popup-createTask-button{
+    opacity: 1;
+    transition: opacity 0.3s ease 0s;
+    margin: 0px 2px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #579DFF;
+    border: none;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+    font-family: var(--font-family-poppins, "Poppins");
+    font-weight: 700;
+    line-height: 1.5;
+}

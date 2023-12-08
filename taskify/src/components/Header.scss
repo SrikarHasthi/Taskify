@@ -1,0 +1,19 @@
+.main-header-container{
+    height: 4rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-header-app-name{
+    text-align: center;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    background: radial-gradient(11387.38% 92.04% at 8.05% 96%, #3095F2 0%, rgba(140, 154, 229, 0.72) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
