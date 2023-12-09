@@ -50,7 +50,7 @@ const AddTaskPopup = ({setAddTaskPopup, setTaskData, taskData}: Props) => {
         <div>
             <div className="task-popup-heading-container">
                 <div>New Task</div>
-                <img src={closeIcon} className="task-popup-close-icon" onClick={()=>setAddTaskPopup(false)} alt="close icon"/>
+                <img src={closeIcon} className="task-popup-close-icon" onClick={(e)=>(setAddTaskPopup(false))} alt="close icon"/>
             </div>
             <div className="task-popup-fields-container">
                 <div className="task-popup-heading">Summary</div>

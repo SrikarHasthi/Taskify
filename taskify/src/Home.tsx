@@ -7,15 +7,22 @@ import { TaskData } from "./Interfaces";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Tasks from "./components/Tasks";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./redux/store";
+import { setTaskPopup } from "./redux/reducers/taskPopupReducer";
 
 const Home: React.FC = () =>{
     const [taskData, setTaskData] = useState<TaskData[]>([])
-    const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
+    const { taskPopupValue } = useSelector((state: RootState) => state.taskPopup)
+    const dispatch = useDispatch()
+    
+    const [addTaskPopup, setAddTaskPopup] = useState<boolean>(taskPopupValue)
     useEffect(()=>{
         console.log(taskData)
     },[taskData])
+    useEffect(()=>{
+        dispatch(setTaskPopup(addTaskPopup))
+    },[addTaskPopup])
     return(
         <div className="home-main-container">
             <Header/>
