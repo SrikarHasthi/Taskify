@@ -1,34 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../components/Tasks.scss"
-import medium from "../assets/medium.svg"
 import play from "../assets/play.svg"
 import pause from "../assets/pause.svg"
 import stop from "../assets/stop.svg"
 import { TaskData } from "../Interfaces";
 import Modal from 'react-modal';
-import { convertTime } from "../Utils";
+import { convertTime, givePriorityImage } from "../Utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { customStyles } from "../StaticData";
+import { customStyles, priorityImages } from "../StaticData";
 import AddTaskPopup from "./AddTaskPopup";
-import { setTaskPopup } from "../redux/reducers/taskPopupReducer";
+import { setTaskData } from "../redux/reducers/taskDataReducer";
 
 interface Props {
-    setTaskData: React.Dispatch<React.SetStateAction<TaskData[]>>,
-    taskData: TaskData[],
     status: string[]
 }
 
-const Tasks = ({taskData, setTaskData, status}: Props) => {
-    const { taskPopupValue } = useSelector((state: RootState) => state.taskPopup)
-    const [addTaskPopup, setAddTaskPopup] = useState<boolean>(taskPopupValue)
+const Tasks = ({status}: Props) => {
+    const allTaskData = useSelector((state: RootState) => state.taskData)
+    const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
+    const [selectedTaskId, setSelectedTaskId] = useState<number>()
     const dispatch = useDispatch()
-    useEffect(()=>{
-        console.log(addTaskPopup);
-        
-        dispatch(setTaskPopup(addTaskPopup))
-    },[addTaskPopup])
-    const handleStatus = (task: TaskData, status:string):void => {
+
+    const handleStatus = (task: TaskData, status:string, e:React.MouseEvent<HTMLImageElement, MouseEvent>):void => {
+        e.stopPropagation()
+            let interval = setInterval(() => task.time, 1000);
+            console.log(interval);
+            
         let newStatus = ""
         if(status === "done"){
             newStatus = "done"
@@ -36,37 +34,43 @@ const Tasks = ({taskData, setTaskData, status}: Props) => {
         else {
             newStatus = task.status === "new" || task.status === "paused" ? "inProgress" : "paused";
         }
-        const newTaskData:TaskData[] = taskData.map((e)=>{
+        const newTaskData:TaskData[] = allTaskData.map((e)=>{
             if(e.id === task.id) {
-                e.status = newStatus
-                return e
+                return {
+                    ...e,
+                    status: newStatus
+                }
             }
             return e
         })
-        setTaskData(newTaskData)
+        dispatch(setTaskData(newTaskData))
     }
     return (
         <div className="tasks-main-container">
-            {taskData.filter((e)=> status.includes(e.status)).map((task)=>{
+
+            {allTaskData.filter((e)=> status.includes(e.status)).map((task)=>{
                 return (
-                    <div className="tasks-section-container" onClick={()=> setAddTaskPopup(true)}>
-                    <Modal
-                        isOpen={taskPopupValue}
-                        style={{
-                            ...customStyles,
-                            content:{
-                            ...customStyles.content,
-                            width: "41rem",
-                            height: "28rem",
-                        }}}
-                        shouldCloseOnOverlayClick={true}
-                        onRequestClose={(e) => {
-                            e.stopPropagation()
-                            setAddTaskPopup(false);
-                        }}
-                        >
-                            <AddTaskPopup setAddTaskPopup={setAddTaskPopup} setTaskData={setTaskData} taskData={taskData}/>
-                    </Modal>
+                    <div className="tasks-section-container" onClick={()=> {
+                        setSelectedTaskId(task.id);
+                        setAddTaskPopup(true)
+                    }}>
+                      {selectedTaskId === task.id ? <Modal
+                            isOpen={addTaskPopup}
+                            style={{
+                                ...customStyles,
+                                content:{
+                                ...customStyles.content,
+                                width: "41rem",
+                                height: "28rem",
+                            }}}
+                            shouldCloseOnOverlayClick={true}
+                            onRequestClose={(e) => {
+                                e.stopPropagation()
+                                setAddTaskPopup(false);
+                            }}
+                            >
+                                <AddTaskPopup setAddTaskPopup={setAddTaskPopup} taskData={[task]}/>
+                        </Modal> : ""}
                     <div className="tasks-section-summary">
                         {task.summary}
                     </div>
@@ -75,16 +79,16 @@ const Tasks = ({taskData, setTaskData, status}: Props) => {
                             <div className="task-section-bottom-time">{convertTime(task.time)}</div>
                             {
                                 task.status !== "done" ?
-                                <img className="task-section-bottom-icon" src={(task.status === "new" || task.status === "paused") ? play : pause} onClick={()=> handleStatus(task, "notDone")} alt="play/pause icon"/>
+                                <img className="task-section-bottom-icon" src={(task.status === "new" || task.status === "paused") ? play : pause} onClick={(e)=> handleStatus(task, "notDone", e)} alt="play/pause icon"/>
                                 : ""
                             }
                             {
                                 (task.status === "inProgress" || task.status === "paused") ? 
-                                <img className="task-section-bottom-icon" src={stop} onClick={()=> handleStatus(task, "done")} alt="stop icon"/> 
+                                <img className="task-section-bottom-icon" src={stop} onClick={(e)=> handleStatus(task, "done", e)} alt="stop icon"/> 
                                 : "" 
                             }
                         </div>
-                        <img className="task-section-bottom-priority" src={medium} alt="priority icon"/>
+                        <img className="task-section-bottom-priority" src={givePriorityImage(task.priority)} alt="priority icon"/>
                     </div>
                 </div>
                 )

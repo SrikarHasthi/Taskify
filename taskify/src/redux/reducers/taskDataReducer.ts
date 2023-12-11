@@ -18,7 +18,7 @@ export const taskDataSlice = createSlice({
   initialState,
   reducers: {
     setTaskData: (state, action: PayloadAction<TaskData[]>) => {
-      state = action.payload
+      return action.payload
     },
   },
 })

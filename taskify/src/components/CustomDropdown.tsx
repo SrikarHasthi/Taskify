@@ -10,7 +10,7 @@ interface Props {
 }
 
 const CustomDropdown = ({changeDropdown, setPriority}: Props) => {
-    const [priorityList, setPriorityList] = useState<priorityInterface[]>(priorityImages)
+    const [priorityList] = useState<priorityInterface[]>(priorityImages)
     return (
         <div className="customDropdown-container">
             {
@@ -22,7 +22,7 @@ const CustomDropdown = ({changeDropdown, setPriority}: Props) => {
                             setPriority(data.value)
                             changeDropdown(data)
                         }}>
-                            <img style={{height:"68%"}} src={data.imgSrc}/>
+                            <img style={{height:"68%"}} src={data.imgSrc} alt={data.value}/>
                             <span  style={{paddingLeft:"0.6rem"}}>{capitalizeFirstLetter(data.value)}</span>
                         </div>
                     )

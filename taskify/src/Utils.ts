@@ -1,3 +1,5 @@
+import { priorityImages } from "./StaticData";
+
 export const capitalizeFirstLetter = (value: string): string => {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
@@ -19,4 +21,13 @@ export const convertTime = (value: string): string =>{
         time = new Date(minutes * 60 * 1000).toISOString().substring(14, 19);
     }
     return time
+}
+
+export const givePriorityImage = (priority:string):string =>{
+    
+    const tempArray = priorityImages.filter((e)=>{
+        return e.value === priority.toLowerCase()
+    })
+    return tempArray[0].imgSrc
+    
 }

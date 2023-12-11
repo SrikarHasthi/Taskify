@@ -9,7 +9,7 @@ export const customStyles: CustomModalStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "#0000009e",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   content: {
     position: "absolute",
