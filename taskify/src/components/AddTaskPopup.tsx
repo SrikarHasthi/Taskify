@@ -4,7 +4,7 @@ import "../components/AddTaskPopup.scss"
 import dropDownArrow from "../assets/dropdown-arrow-svgrepo-com.svg"
 import CustomDropdown from "./CustomDropdown";
 import { priorityImages } from "../StaticData";
-import { capitalizeFirstLetter, givePriorityImage } from "../Utils";
+import { capitalizeFirstLetter, convertTime, givePriorityImage } from "../Utils";
 import { useOutsideAlerter } from "../hooks";
 import { TaskData, priorityInterface } from "../Interfaces";
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,7 +25,7 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
     const [summary, setSummary] = useState<string>((taskData && taskData[0]) ? taskData[0].summary : "")
     const [description, setDescription] = useState<string>((taskData && taskData[0]) ? taskData[0].description : "")
     const [priority, setPriority] = useState<string>((taskData && taskData[0]) ? capitalizeFirstLetter(taskData[0].priority) : capitalizeFirstLetter(priorityImages[1].value))
-    const [time, setTime] = useState<string>((taskData && taskData[0]) ? taskData[0].time : "")
+    const [time, setTime] = useState<string>((taskData && taskData[0]) ? convertTime(taskData[0].time).toAlphaNumericTime : "")
     const dispatch = useDispatch()
     const dropdownRef = useRef(null)
     useOutsideAlerter(dropdownRef, ()=>{
@@ -48,7 +48,7 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
                         description: description,
                         summary: summary,
                         priority: priorityValue.value,
-                        time: time,
+                        time: convertTime(time).toMs(),
                     }
                 }
                 return e
@@ -62,11 +62,24 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
                 summary: summary,
                 description: description,
                 priority: priority,
-                time: time,
+                time: convertTime(time).toMs(),
                 status: "new",
             }]))
             setAddTaskPopup(false)
         }  
+    }
+
+    const handleDelete = (id: number) => {
+        const updatedTaskData = allTaskData.filter((e)=>{
+            if(e.id !== id){
+                return e
+            }
+            else {
+                localStorage.removeItem(`${e.id}`)
+            }
+        })
+        dispatch(setTaskData(updatedTaskData))
+        setAddTaskPopup(false)
     }
 
 
@@ -95,6 +108,11 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
                 <div className="task-popup-heading">Set Time</div>
                 <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="1d 4h 30m" value={time} onChange={(e)=>{setTime(e.target.value)}}/>
                 <button className="task-popup-createTask-button" onClick={(e)=> {e.stopPropagation(); handleSubmit()}}>{(taskData && taskData[0]) ? "Done" : "Create"}</button>
+                {
+                    (taskData && taskData[0]) ? <button className="task-popup-createTask-button" onClick={(e)=> {e.stopPropagation(); handleDelete(taskData[0].id)}}>Delete</button> 
+                    : ""
+                }
+                
             </div>
             <ToastContainer 
                 position="bottom-right"

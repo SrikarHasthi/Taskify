@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Modal from 'react-modal';
 import './App.css';
 import AddTaskPopup from './components/AddTaskPopup';
@@ -6,10 +6,30 @@ import { customStyles } from './StaticData';
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Tasks from "./components/Tasks";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./redux/store";
+import { setTaskData } from "./redux/reducers/taskDataReducer";
 
 const Home: React.FC = () =>{
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
+    const dispatch = useDispatch()
+    const allTaskData = useSelector((state: RootState) => state.taskData)
+    useEffect(()=>{
+        if(localStorage.getItem(`allTaskData`)){
+            const storedTaskdata = localStorage.getItem(`allTaskData`)
+            if(storedTaskdata != null){
+                dispatch(setTaskData(JSON.parse(storedTaskdata)))
+            }
+        }
+    },[])
 
+    useEffect(()=>{
+        const timeout = setTimeout(() => { 
+            localStorage.setItem(`allTaskData`, `${JSON.stringify(allTaskData)}`)
+          }, 500); 
+       
+          return () => clearTimeout(timeout); 
+    },[allTaskData])
     return(
         <div className="home-main-container">
             <Header/>

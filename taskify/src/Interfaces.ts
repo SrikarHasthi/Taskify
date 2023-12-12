@@ -15,6 +15,12 @@ export interface TaskData {
   summary: string,
   description: string,
   priority: string,
-  time: string,
+  time: number,
   status: string,
+}
+
+export interface TimeConverter {
+  toDisplayTime(): string,
+  toAlphaNumericTime(): string,
+  toMs(): number,
 }

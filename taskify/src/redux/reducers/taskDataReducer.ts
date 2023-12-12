@@ -8,7 +8,7 @@ const initialState: TaskData[] = [
     summary: "",
     description: "",
     priority: "",
-    time: "",
+    time: 0,
     status: "",
   }
 ]

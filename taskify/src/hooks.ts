@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { useState, RefObject, useEffect } from "react";
 
 export const useOutsideAlerter = (ref: RefObject<HTMLElement>, clickOutside?:(event: MouseEvent) => void) => {
     useEffect(() => {
@@ -13,5 +13,34 @@ export const useOutsideAlerter = (ref: RefObject<HTMLElement>, clickOutside?:(ev
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [ref, clickOutside]);
+};
+
+export const useCountdown = (targetTime: number) => {
+  const countDownDate = new Date(targetTime).getTime();
+  
+  const [countDown, setCountDown] = useState(
+    countDownDate - new Date().getTime()
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountDown(countDownDate - new Date().getTime());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [countDownDate]);
+
+  return {countDown, ...getReturnValues(countDown)};
+};
+
+const getReturnValues = (countDown: number) => {
+  // calculate time left
+  const hours = Math.floor(
+    (countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
+
+  return {hours, minutes, seconds};
 };
 

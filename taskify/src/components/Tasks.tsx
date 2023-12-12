@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../components/Tasks.scss"
 import play from "../assets/play.svg"
 import pause from "../assets/pause.svg"
@@ -11,6 +11,7 @@ import { RootState } from "../redux/store";
 import { customStyles, priorityImages } from "../StaticData";
 import AddTaskPopup from "./AddTaskPopup";
 import { setTaskData } from "../redux/reducers/taskDataReducer";
+import CountdownTimer from "./CountdownTimer";
 
 interface Props {
     status: string[]
@@ -21,23 +22,31 @@ const Tasks = ({status}: Props) => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
     const [selectedTaskId, setSelectedTaskId] = useState<number>()
     const dispatch = useDispatch()
-
     const handleStatus = (task: TaskData, status:string, e:React.MouseEvent<HTMLImageElement, MouseEvent>):void => {
         e.stopPropagation()
-            let interval = setInterval(() => task.time, 1000);
-            console.log(interval);
-            
+        setSelectedTaskId(task.id)
         let newStatus = ""
+        let localStorageTime = task.time
         if(status === "done"){
+            localStorage.removeItem(`${task.id}`)
             newStatus = "done"
         }
         else {
-            newStatus = task.status === "new" || task.status === "paused" ? "inProgress" : "paused";
+            if(task.status === "new" || task.status === "paused"){
+                localStorage.setItem(`${task.id}`, `${task.time}`)
+                newStatus = "inProgress"
+            }
+            if(task.status === "inProgress"){
+                localStorageTime = getLocalStorageTime(task.id)
+                newStatus = "paused"
+            }
+            // newStatus = task.status === "new" || task.status === "paused" ? "inProgress" : "paused";
         }
         const newTaskData:TaskData[] = allTaskData.map((e)=>{
             if(e.id === task.id) {
                 return {
                     ...e,
+                    time: localStorageTime,
                     status: newStatus
                 }
             }
@@ -45,6 +54,24 @@ const Tasks = ({status}: Props) => {
         })
         dispatch(setTaskData(newTaskData))
     }
+    const getLocalStorageTime = (id: number): number => {
+        const storedValue = localStorage.getItem(`${id}`); 
+        return storedValue !== null ? parseInt(storedValue) : 0;
+    };
+
+    const checkTimeForDone = (id: number) => {
+        const newTaskData:TaskData[] = allTaskData.map((e)=>{
+            if(e.id === id) {
+                return {
+                    ...e,
+                    status: "done"
+                }
+            }
+            return e
+        })
+        dispatch(setTaskData(newTaskData))
+    }
+      
     return (
         <div className="tasks-main-container">
 
@@ -76,7 +103,14 @@ const Tasks = ({status}: Props) => {
                     </div>
                     <div className="task-section-bottom">
                         <div className="task-section-bottom-time-conatiner">
-                            <div className="task-section-bottom-time">{convertTime(task.time)}</div>
+                            
+                            <div className="task-section-bottom-time">
+                                {
+                                    (task.status === "inProgress") ? <CountdownTimer targetTime={new Date().getTime() + getLocalStorageTime(task.id)} taskId={task.id} checkTimeForDone={checkTimeForDone}/>
+                                    : convertTime(task.time).toDisplayTime()
+                                }
+                            </div>
+                            
                             {
                                 task.status !== "done" ?
                                 <img className="task-section-bottom-icon" src={(task.status === "new" || task.status === "paused") ? play : pause} onClick={(e)=> handleStatus(task, "notDone", e)} alt="play/pause icon"/>

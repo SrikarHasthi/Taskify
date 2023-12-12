@@ -1,27 +1,66 @@
+import { TimeConverter } from "./Interfaces";
 import { priorityImages } from "./StaticData";
 
 export const capitalizeFirstLetter = (value: string): string => {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export const convertTime = (value: string): string =>{
-    let time = ""
-    let hour = null
-    let minutes = 0
-    if (value.includes('h')){
-        hour = value.split('h')
-        minutes = parseInt(hour[0]) * 60
-        if(value.includes('m')){
-            minutes = minutes + parseInt(hour[1].split('m')[0]) 
+  
+export const convertTime = (value: number | string): TimeConverter => {
+    const toDisplayTime = () => {
+      let time = ''
+      time = new Date(value).toISOString().substring(11, 19);
+      // } else if (value.includes('m')) {
+      //   minutes = parseInt(value.split('m')[0]);
+      //   time = new Date(minutes * 60 * 1000).toISOString().substring(14, 19);
+      // }
+  
+      return time;
+    };
+
+    const toAlphaNumericTime = () => {
+      let time = ''
+      time = new Date(value).toISOString().substring(11, 19);
+      let timeArray = time.split(':')
+      if(timeArray[0] !== '00'){
+        time = timeArray[0]+'h ' + timeArray[1] + 'm'
+      }
+      else {
+        time = timeArray[1]+'m'
+      }
+      return time
+    }
+
+    const toMs = () => {
+      let minutes = 0;
+      let time = 0;
+      let hour: string[] | null = null;
+      if(typeof value === "string"){
+        if (value.includes('h')) {
+          hour = value.split('h');
+          minutes = parseInt(hour[0]) * 60;
+      
+          if (value.includes('m')) {
+            minutes += parseInt(hour[1].split('m')[0]);
+          }
+      
+          time = minutes * 60 * 1000
+        } else if (value.includes('m')) {
+          minutes = parseInt(value.split('m')[0]);
+          time = minutes * 60 * 1000
         }
-        time = new Date(minutes * 60 * 1000).toISOString().substring(11, 19)
-    }
-    else if (value.includes('m')){
-        minutes = parseInt(value.split('m')[0])
-        time = new Date(minutes * 60 * 1000).toISOString().substring(14, 19);
-    }
-    return time
-}
+      }
+    
+      return time;
+    };
+  
+    return {
+      toDisplayTime,
+      toAlphaNumericTime,
+      toMs,
+    };
+};
+  
 
 export const givePriorityImage = (priority:string):string =>{
     
