@@ -12,7 +12,7 @@ const Sidebar = () => {
 
     return (
         <div className="main-sidebar-container">
-            <div className="sidebar-load-tasks-section" onClick={()=>handleLoad()}>jj</div>
+            <div className="sidebar-load-tasks-section" onClick={()=>handleLoad()}></div>
         </div>
     )
 }
