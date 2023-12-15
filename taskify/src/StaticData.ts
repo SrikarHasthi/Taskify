@@ -1,4 +1,5 @@
-import { CustomModalStyles } from "./Interfaces";
+import { CustomModalStyles, TaskData } from "./Interfaces";
+import { convertTime } from "./Utils";
 
 
 export const customStyles: CustomModalStyles = {
@@ -44,3 +45,24 @@ export const priorityImages =
   },
   
 ]
+
+export const savedTasks = ():TaskData[] => {
+ return [
+    {
+      id: Date.now(),
+      summary: "Learn Backend",
+      description: "",
+      priority: "medium",
+      time: convertTime("1h").toMs(),
+      status: "new",
+    },
+    {
+      id: Date.now()+100,
+      summary: "Leetcode",
+      description: "",
+      priority: "medium",
+      time: convertTime("1h").toMs(),
+      status: "new",
+    },
+  ]
+}
