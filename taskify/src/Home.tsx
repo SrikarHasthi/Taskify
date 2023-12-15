@@ -15,12 +15,29 @@ const Home: React.FC = () =>{
     const dispatch = useDispatch()
     const allTaskData = useSelector((state: RootState) => state.taskData)
     useEffect(()=>{
-        if(localStorage.getItem(`allTaskData`)){
-            const storedTaskdata = localStorage.getItem(`allTaskData`)
-            if(storedTaskdata != null){
-                dispatch(setTaskData(JSON.parse(storedTaskdata)))
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString();
+        if(localStorage.getItem('expToken')){
+            const expToken = localStorage.getItem('expToken')
+            if(expToken === formattedDate) {
+                if(localStorage.getItem(`allTaskData`)){
+                    const storedTaskdata = localStorage.getItem(`allTaskData`)
+                    if(storedTaskdata != null){
+                        dispatch(setTaskData(JSON.parse(storedTaskdata)))
+                    }
+                }
+            }
+            else{
+                if(localStorage.getItem(`allTaskData`)){
+                    localStorage.removeItem(`allTaskData`)
+                    localStorage.setItem(`expToken`, formattedDate)
+                }
             }
         }
+        else {
+            localStorage.setItem(`expToken`, formattedDate)
+        }
+        
     },[])
 
     useEffect(()=>{
