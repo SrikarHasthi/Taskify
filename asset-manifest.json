@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/taskify/static/css/main.58ed6465.css",
+    "main.js": "/taskify/static/js/main.3a51f790.js",
+    "static/media/close-icon.svg": "/taskify/static/media/close-icon.618ac6302a33628a7d352cf5a5360c1d.svg",
+    "static/media/pause.svg": "/taskify/static/media/pause.7594ded892b670d04469b8ee1737fb9c.svg",
+    "index.html": "/taskify/index.html",
+    "static/media/dropdown-arrow-svgrepo-com.svg": "/taskify/static/media/dropdown-arrow-svgrepo-com.ab52c97c10b42dc6ad544ee3f433baf1.svg",
+    "static/media/stop.svg": "/taskify/static/media/stop.6ff5c521642df64b2bc849bf609bbc7a.svg",
+    "static/media/play.svg": "/taskify/static/media/play.1cf0b70b1ace660f339e2017acc1333e.svg",
+    "main.58ed6465.css.map": "/taskify/static/css/main.58ed6465.css.map",
+    "main.3a51f790.js.map": "/taskify/static/js/main.3a51f790.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.58ed6465.css",
+    "static/js/main.3a51f790.js"
+  ]
+}
