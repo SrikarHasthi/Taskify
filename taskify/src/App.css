@@ -6,3 +6,58 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+hr {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+}
+
+.home-main-sub-container {
+  display: flex;
+  height: calc(100vh - 4.1rem);
+}
+
+.main-sidebar-container {
+  width: 15%;
+  background-color: #D8DFF0;
+}
+
+.home-main-tasks-container {
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.home-main-add-task-button{
+    width: 4rem;
+    opacity: 1;
+    transition: opacity 0.3s ease 0s;
+    margin: 0px 2px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: #3468EF;
+    border: none;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+    font-family: var(--font-family-poppins, "Poppins");
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.home-main-tasks-sub-conatiner {
+  display: flex;
+  margin-top: 2rem;
+}
+
