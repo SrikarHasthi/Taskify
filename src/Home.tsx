@@ -9,11 +9,23 @@ import Tasks from "./components/Tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setTaskData } from "./redux/reducers/taskDataReducer";
+import { retrieveTodos } from "./api/apis";
+import { useAuth } from "./AuthContext";
+
 
 const Home: React.FC = () =>{
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
     const dispatch = useDispatch()
     const allTaskData = useSelector((state: RootState) => state.taskData)
+    const authContext = useAuth();
+
+    useEffect(()=>{
+        retrieveTodos().then((res)=>{
+            if(res && res.data)
+            console.log(res.data);
+        })
+    },[])
+
     useEffect(()=>{
         const currentDate = new Date();
         const formattedDate = currentDate.toLocaleDateString();
@@ -37,6 +49,12 @@ const Home: React.FC = () =>{
         else {
             localStorage.setItem(`expToken`, formattedDate)
         }
+        if (!("Notification" in window)) {
+            console.log("Browser does not support desktop notification");
+          } else {
+            Notification.requestPermission();
+          }
+
         
     },[])
 
@@ -50,7 +68,7 @@ const Home: React.FC = () =>{
     return(
         <div className="home-main-container">
             <Header/>
-            <hr style={{width: "99%"}}/>
+            <hr style={{width: "99%", margin: "0"}}/>
             <div className="home-main-sub-container">
                 <Sidebar/>
                 <div className="home-main-tasks-container">

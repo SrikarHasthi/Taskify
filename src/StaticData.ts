@@ -43,7 +43,6 @@ export const priorityImages =
     value: "high",
     imgSrc: "https://srikarhasthi.atlassian.net/images/icons/priorities/high.svg",
   },
-  
 ]
 
 export const savedTasks = ():TaskData[] => {

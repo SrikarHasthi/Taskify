@@ -40,6 +40,7 @@ hr {
 }
 
 .home-main-add-task-button{
+    box-sizing: content-box;
     width: 4rem;
     opacity: 1;
     transition: opacity 0.3s ease 0s;
