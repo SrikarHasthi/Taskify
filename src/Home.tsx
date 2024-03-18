@@ -37,6 +37,11 @@ const Home: React.FC = () =>{
         else {
             localStorage.setItem(`expToken`, formattedDate)
         }
+        if (!("Notification" in window)) {
+            console.log("Browser does not support desktop notification");
+          } else {
+            Notification.requestPermission();
+          }
         
     },[])
 

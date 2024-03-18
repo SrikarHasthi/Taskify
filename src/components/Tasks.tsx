@@ -60,15 +60,23 @@ const Tasks = ({status}: Props) => {
     };
 
     const checkTimeForDone = (id: number) => {
-        const newTaskData:TaskData[] = allTaskData.map((e)=>{
-            if(e.id === id) {
+        let task: TaskData | null = null;
+
+        const newTaskData: TaskData[] = allTaskData.map((e) => {
+            if (e.id === id) {
+                task = e;
                 return {
                     ...e,
                     status: "done"
-                }
+                };
             }
-            return e
-        })
+            return e;
+        });
+        
+        if (task !== null) {
+            new Notification(`Task ${(task as TaskData).summary} is completed`)
+        }
+        localStorage.removeItem(`${id}`)
         dispatch(setTaskData(newTaskData))
     }
       
