@@ -39,18 +39,6 @@ hr {
   height: calc(100vh - 4.1rem);
 }
 
-.main-sidebar-container {
-  width: 15%;
-  background-color: var(--sidebar-background, #D8DFF0);
-}
-
-.sidebar-load-tasks-section{
-  position: absolute;
-  width: 12%;
-  height: 3rem;
-  bottom: 1rem;
-}
-
 .home-main-tasks-container {
   padding: 1rem 2rem;
   width: 100%;

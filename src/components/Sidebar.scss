@@ -1,0 +1,53 @@
+.main-sidebar-container {
+  width: 15%;
+  background-color: var(--sidebar-background, #d8dff0);
+}
+
+.sidebar-load-tasks-section {
+  position: absolute;
+  width: 12%;
+  height: 3rem;
+  bottom: 51rem;
+}
+
+.main-sidebar-text{
+    color: #828284;
+}
+
+.main-sidebar-coming-soon{
+    position: relative;
+    top: 43rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-sidebar-coming-soon-img {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+    img {
+        width: 100%;
+    }
+}
+
+.main-sidebar-text{
+    color: #828284;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+        width: 1.2rem;
+        cursor: pointer;
+        margin-left: 0.2rem;
+
+        img {
+            width: 100%;
+        }
+    }
+}

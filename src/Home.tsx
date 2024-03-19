@@ -13,6 +13,7 @@ import empty from './assets/empty.png';
 
 const Home: React.FC = () => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const dispatch = useDispatch()
     const allTaskData = useSelector((state: RootState) => state.taskData)
     useEffect(() => {
@@ -45,6 +46,7 @@ const Home: React.FC = () => {
         } else {
             Notification.requestPermission();
         }
+        setIsLoading(true);
 
     }, [])
 
@@ -86,28 +88,30 @@ const Home: React.FC = () => {
                         <AddTaskPopup setAddTaskPopup={setAddTaskPopup} />
                     </Modal>
                     {
-                        allTaskData.length > 1 ?
-                            <div className="home-main-tasks-sub-conatiner">
-                                <div className="home-main-tasks-task-container">
-                                    <div className="home-main-tasks-heading">TO DO</div>
-                                    <Tasks status={["new"]} />
+                        isLoading ?
+                            allTaskData.length > 0 ?
+                                <div className="home-main-tasks-sub-conatiner">
+                                    <div className="home-main-tasks-task-container">
+                                        <div className="home-main-tasks-heading">TO DO</div>
+                                        <Tasks status={["new"]} />
+                                    </div>
+                                    <div className="home-main-tasks-task-container">
+                                        <div className="home-main-tasks-heading">IN PROGRESS</div>
+                                        <Tasks status={["inProgress", "paused"]} />
+                                    </div>
+                                    <div className="home-main-tasks-task-container">
+                                        <div className="home-main-tasks-heading .gg-3">DONE</div>
+                                        <Tasks status={["done"]} />
+                                    </div>
                                 </div>
-                                <div className="home-main-tasks-task-container">
-                                    <div className="home-main-tasks-heading">IN PROGRESS</div>
-                                    <Tasks status={["inProgress", "paused"]} />
+                                :
+                                <div className="home-main-no-tasks-container">
+                                    <div className="home-main-no-tasks-sub-container">
+                                        <img src={empty} />
+                                        ADD A TASK TO GET STARTED
+                                    </div>
                                 </div>
-                                <div className="home-main-tasks-task-container">
-                                    <div className="home-main-tasks-heading .gg-3">DONE</div>
-                                    <Tasks status={["done"]} />
-                                </div>
-                            </div>
-                            :
-                            <div className="home-main-no-tasks-container">
-                                <div className="home-main-no-tasks-sub-container">
-                                    <img src={empty} />
-                                    ADD A TASK TO GET STARTED
-                                </div>
-                            </div>
+                            : ""
                     }
                 </div>
             </div>
