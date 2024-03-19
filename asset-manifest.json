@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/Taskify/static/css/main.58ed6465.css",
-    "main.js": "/Taskify/static/js/main.1e8baeea.js",
-    "static/media/close-icon.svg": "/Taskify/static/media/close-icon.618ac6302a33628a7d352cf5a5360c1d.svg",
-    "static/media/pause.svg": "/Taskify/static/media/pause.7594ded892b670d04469b8ee1737fb9c.svg",
+    "main.css": "/Taskify/static/css/main.f9e16474.css",
+    "main.js": "/Taskify/static/js/main.31579ca6.js",
+    "static/media/empty.png": "/Taskify/static/media/empty.b78a06f517958688a3b4.png",
+    "static/media/close-icon.svg": "/Taskify/static/media/close-icon.0c9d5b78c9b9472a3b0640d9ed83b73d.svg",
+    "static/media/pause.svg": "/Taskify/static/media/pause.70629f7dc8bb3ca284cd2588cee353a0.svg",
     "index.html": "/Taskify/index.html",
     "static/media/dropdown-arrow-svgrepo-com.svg": "/Taskify/static/media/dropdown-arrow-svgrepo-com.ab52c97c10b42dc6ad544ee3f433baf1.svg",
-    "static/media/stop.svg": "/Taskify/static/media/stop.6ff5c521642df64b2bc849bf609bbc7a.svg",
-    "static/media/play.svg": "/Taskify/static/media/play.1cf0b70b1ace660f339e2017acc1333e.svg",
-    "main.58ed6465.css.map": "/Taskify/static/css/main.58ed6465.css.map",
-    "main.1e8baeea.js.map": "/Taskify/static/js/main.1e8baeea.js.map"
+    "static/media/stop.svg": "/Taskify/static/media/stop.3fbcd2c86283787c39137b80b7d2e16e.svg",
+    "static/media/play.svg": "/Taskify/static/media/play.e3d19f892707c62514742f095879e470.svg",
+    "main.f9e16474.css.map": "/Taskify/static/css/main.f9e16474.css.map",
+    "main.31579ca6.js.map": "/Taskify/static/js/main.31579ca6.js.map"
   },
   "entrypoints": [
-    "static/css/main.58ed6465.css",
-    "static/js/main.1e8baeea.js"
+    "static/css/main.f9e16474.css",
+    "static/js/main.31579ca6.js"
   ]
 }
