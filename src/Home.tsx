@@ -9,26 +9,29 @@ import Tasks from "./components/Tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setTaskData } from "./redux/reducers/taskDataReducer";
+import empty from './assets/empty.png';
 
-const Home: React.FC = () =>{
+const Home: React.FC = () => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
     const dispatch = useDispatch()
     const allTaskData = useSelector((state: RootState) => state.taskData)
-    useEffect(()=>{
+    useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toLocaleDateString();
-        if(localStorage.getItem('expToken')){
+        if (localStorage.getItem('expToken')) {
             const expToken = localStorage.getItem('expToken')
-            if(expToken === formattedDate) {
-                if(localStorage.getItem(`allTaskData`)){
+            if (expToken === formattedDate) {
+                if (localStorage.getItem(`allTaskData`)) {
                     const storedTaskdata = localStorage.getItem(`allTaskData`)
-                    if(storedTaskdata != null){
+                    if (storedTaskdata != null) {
+                        console.log(JSON.parse(storedTaskdata));
+
                         dispatch(setTaskData(JSON.parse(storedTaskdata)))
                     }
                 }
             }
-            else{
-                if(localStorage.getItem(`allTaskData`)){
+            else {
+                if (localStorage.getItem(`allTaskData`)) {
                     localStorage.removeItem(`allTaskData`)
                     localStorage.setItem(`expToken`, formattedDate)
                 }
@@ -39,51 +42,76 @@ const Home: React.FC = () =>{
         }
         if (!("Notification" in window)) {
             console.log("Browser does not support desktop notification");
-          } else {
+        } else {
             Notification.requestPermission();
-          }
-        
-    },[])
+        }
 
-    useEffect(()=>{
-        const timeout = setTimeout(() => { 
+    }, [])
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
             localStorage.setItem(`allTaskData`, `${JSON.stringify(allTaskData)}`)
-          }, 500); 
-       
-          return () => clearTimeout(timeout); 
-    },[allTaskData])
-    return(
+        }, 500);
+        console.log(allTaskData);
+
+
+        return () => clearTimeout(timeout);
+    }, [allTaskData])
+
+
+    return (
         <div className="home-main-container">
-            <Header/>
-            <hr style={{width: "99%"}}/>
+            <Header />
+            {/* <hr style={{width: "99%"}}/> */}
+            <div style={{ width: "100%", background: "rgb(0 0 0 / 17%)", height: "2px" }}></div>
             <div className="home-main-sub-container">
-                <Sidebar/>
+                <Sidebar />
                 <div className="home-main-tasks-container">
-                    <div className="home-main-add-task-button" onClick={()=>setAddTaskPopup(true)}>Add Task</div>
+                    <div className="home-main-add-task-button" onClick={() => setAddTaskPopup(true)}>Add Task</div>
                     <Modal
                         isOpen={addTaskPopup}
                         style={{
                             ...customStyles,
-                            content:{
-                            ...customStyles.content,
-                            width: "41rem",
-                            height: "28rem",
-                        }}}
+                            content: {
+                                ...customStyles.content,
+                                width: "41rem",
+                                height: "28rem",
+                            }
+                        }}
                         shouldCloseOnOverlayClick={true}
                         onRequestClose={() => {
                             setAddTaskPopup(false);
                         }}
-                        >
-                            <AddTaskPopup setAddTaskPopup={setAddTaskPopup}/>
+                    >
+                        <AddTaskPopup setAddTaskPopup={setAddTaskPopup} />
                     </Modal>
-                    <div className="home-main-tasks-sub-conatiner">
-                        <Tasks status={["new"]}/>
-                        <Tasks status={["inProgress", "paused"]}/>
-                        <Tasks status={["done"]}/>
-                    </div>
-                    </div>
+                    {
+                        allTaskData.length > 1 ?
+                            <div className="home-main-tasks-sub-conatiner">
+                                <div className="home-main-tasks-task-container">
+                                    <div className="home-main-tasks-heading">TO DO</div>
+                                    <Tasks status={["new"]} />
+                                </div>
+                                <div className="home-main-tasks-task-container">
+                                    <div className="home-main-tasks-heading">IN PROGRESS</div>
+                                    <Tasks status={["inProgress", "paused"]} />
+                                </div>
+                                <div className="home-main-tasks-task-container">
+                                    <div className="home-main-tasks-heading .gg-3">DONE</div>
+                                    <Tasks status={["done"]} />
+                                </div>
+                            </div>
+                            :
+                            <div className="home-main-no-tasks-container">
+                                <div className="home-main-no-tasks-sub-container">
+                                    <img src={empty} />
+                                    ADD A TASK TO GET STARTED
+                                </div>
+                            </div>
+                    }
                 </div>
             </div>
+        </div>
     )
 }
 
