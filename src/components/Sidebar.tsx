@@ -11,9 +11,12 @@ const Sidebar = () => {
     }
 
     return (
-        <div className="main-sidebar-container">
-            <div className="sidebar-load-tasks-section" onClick={()=>handleLoad()}></div>
-        </div>
+        <>
+            <div className="main-sidebar-container">
+                <div className="sidebar-load-tasks-section" onClick={() => handleLoad()}></div>
+            </div>
+            <div style={{ width: "3px", background: "rgb(0 0 0 / 17%)", height: "100%" }}></div>
+        </>
     )
 }
 
