@@ -2,16 +2,7 @@ import { TaskData } from "../../Interfaces";
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: TaskData[] = [
-  {
-    id: 0,
-    summary: "",
-    description: "",
-    priority: "",
-    time: 0,
-    status: "",
-  }
-]
+const initialState: TaskData[] = []
 
 export const taskDataSlice = createSlice({
   name: 'taskData',
