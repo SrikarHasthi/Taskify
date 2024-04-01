@@ -19,12 +19,12 @@ const Sidebar = () => {
             <div className="main-sidebar-container">
                 <div className="main-sidebar-coming-soon">
                     <div className="main-sidebar-coming-soon-img">
-                        <img src={comingSoon} />
+                        <img src={comingSoon} alt="coming soon"/>
                     </div>
                     <p className="main-sidebar-text">New Features</p>
                     <p className="main-sidebar-text">Coming Soon!!
                         <span  data-tooltip-id={"coming-soon-tooltip"}>
-                            <img src={question} />
+                            <img src={question} alt="question"/>
                         </span>
                         <Tooltip id="coming-soon-tooltip" data-tooltip-place="right-start" style={{width:"13rem", background:"black"}}>
                             Backend with Java Spring Boot with Login, Profile, Tasks History, Favourite tasks and many more..

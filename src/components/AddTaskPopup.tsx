@@ -4,7 +4,7 @@ import "../components/AddTaskPopup.scss"
 import dropDownArrow from "../assets/dropdown-arrow-svgrepo-com.svg"
 import CustomDropdown from "./CustomDropdown";
 import { priorityImages } from "../StaticData";
-import { capitalizeFirstLetter, convertTime, givePriorityImage } from "../Utils";
+import { capitalizeFirstLetter, convertTime, givePriorityImage, validateTime } from "../Utils";
 import { useOutsideAlerter } from "../hooks";
 import { TaskData, priorityInterface } from "../Interfaces";
 import { ToastContainer, toast } from 'react-toastify';
@@ -37,8 +37,11 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
         setShowDropdown(false)
     }
     const handleSubmit = ():void => {
-        if(summary === "" || description === "" || time === ""){
+        if(summary === "" || time === ""){
             toast.error("Field is empty")
+        }
+        else if (!validateTime(time)) {
+            toast.error("Enter time in format 1h 5m")
         }
         else if((taskData && taskData[0])){
             const updatedTaskData = allTaskData.map((e)=>{
@@ -106,7 +109,7 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
                     </div> : ""}      
                 </div>
                 <div className="task-popup-heading">Set Time</div>
-                <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="1d 4h 30m" value={time} onChange={(e)=>{setTime(e.target.value)}}/>
+                <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="4h 30m" value={time} onChange={(e)=>{setTime(e.target.value)}}/>
                 <button className="task-popup-createTask-button" onClick={(e)=> {e.stopPropagation(); handleSubmit()}}>{(taskData && taskData[0]) ? "Done" : "Create"}</button>
                 {
                     (taskData && taskData[0]) ? <button className="task-popup-createTask-button" onClick={(e)=> {e.stopPropagation(); handleDelete(taskData[0].id)}}>Delete</button> 
