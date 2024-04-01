@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../components/Tasks.scss"
 import play from "../assets/play.svg"
 import pause from "../assets/pause.svg"
@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 import { convertTime, givePriorityImage } from "../Utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { customStyles, priorityImages } from "../StaticData";
+import { customStyles } from "../StaticData";
 import AddTaskPopup from "./AddTaskPopup";
 import { setTaskData } from "../redux/reducers/taskDataReducer";
 import CountdownTimer from "./CountdownTimer";
@@ -83,9 +83,9 @@ const Tasks = ({status}: Props) => {
     return (
         <div className="tasks-main-container">
 
-            {allTaskData.filter((e)=> status.includes(e.status)).map((task)=>{
+            {allTaskData.filter((e)=> status.includes(e.status)).map((task, id)=>{
                 return (
-                    <div className="tasks-section-container" onClick={()=> {
+                    <div className="tasks-section-container" key={id} onClick={()=> {
                         setSelectedTaskId(task.id);
                         setAddTaskPopup(true)
                     }}>

@@ -27,7 +27,6 @@ const CountdownTimer = ({ targetTime, taskId, checkTimeForDone }: Props) => {
     (hours <= 0)?
         (minutes + seconds <= 0) ?
         <p onLoad={()=>{
-          console.log("fdgfdgfdgdfgfdgd");
           
           // dispatch(setTaskPopup(true))}
         }}>00:00</p>

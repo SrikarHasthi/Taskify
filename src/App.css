@@ -37,6 +37,7 @@ hr {
 .home-main-sub-container {
   display: flex;
   height: calc(100vh - 4.1rem);
+  overflow: auto
 }
 
 .home-main-tasks-container {
@@ -93,4 +94,10 @@ hr {
   font-size: 1rem;
   color: #828284;
   margin-top: 5rem;
+}
+
+@media (max-width: 960px) {
+  .main-sidebar-show-container {
+      display: none;
+  }
 }

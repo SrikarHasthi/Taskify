@@ -51,3 +51,9 @@
         }
     }
 }
+
+@media (max-width: 960px) {
+    .main-sidebar-container {
+        display: none;
+    }
+}

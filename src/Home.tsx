@@ -25,8 +25,6 @@ const Home: React.FC = () => {
                 if (localStorage.getItem(`allTaskData`)) {
                     const storedTaskdata = localStorage.getItem(`allTaskData`)
                     if (storedTaskdata != null) {
-                        console.log(JSON.parse(storedTaskdata));
-
                         dispatch(setTaskData(JSON.parse(storedTaskdata)))
                     }
                 }
@@ -54,9 +52,6 @@ const Home: React.FC = () => {
         const timeout = setTimeout(() => {
             localStorage.setItem(`allTaskData`, `${JSON.stringify(allTaskData)}`)
         }, 500);
-        console.log(allTaskData);
-
-
         return () => clearTimeout(timeout);
     }, [allTaskData])
 
@@ -76,7 +71,8 @@ const Home: React.FC = () => {
                             ...customStyles,
                             content: {
                                 ...customStyles.content,
-                                width: "41rem",
+                                width: (window.innerWidth >= 960) ? "41rem" : "90%",
+                                inset: (window.innerWidth >= 960) ? "40px" : "0px",
                                 height: "28rem",
                             }
                         }}
@@ -107,7 +103,7 @@ const Home: React.FC = () => {
                                 :
                                 <div className="home-main-no-tasks-container">
                                     <div className="home-main-no-tasks-sub-container">
-                                        <img src={empty} />
+                                        <img src={empty} alt="empty"/>
                                         ADD A TASK TO GET STARTED
                                     </div>
                                 </div>
