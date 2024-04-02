@@ -25,11 +25,11 @@ const AuthenticatedRoute = ({children}: Props) => {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element= {<Login/>}></Route>
-            <Route path='/todos' element= {
-              <AuthenticatedRoute>
+            {/* <Route path='/' element= {<Login/>}></Route> */}
+            <Route path='/' element= {
+              // <AuthenticatedRoute>
                 <Home/>
-            </AuthenticatedRoute>
+            // </AuthenticatedRoute>
             }></Route>
           </Routes>
         </BrowserRouter>

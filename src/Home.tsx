@@ -9,7 +9,7 @@ import Tasks from "./components/Tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setTaskData } from "./redux/reducers/taskDataReducer";
-import { retrieveTodos } from "./api/apis";
+import { retrieveTodos, updateTodos } from "./api/apis";
 import { useAuth } from "./AuthContext";
 
 
@@ -20,6 +20,10 @@ const Home: React.FC = () =>{
     const authContext = useAuth();
 
     useEffect(()=>{
+        updateTodos().then((res)=>{
+            if(res && res.data)
+            console.log(res);
+        })
         retrieveTodos().then((res)=>{
             if(res && res.data)
             console.log(res.data);
