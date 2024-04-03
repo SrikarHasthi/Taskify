@@ -1,10 +1,23 @@
+:root {
+  --main-background: #1D2125;
+  --sidebar-background: #1D2125;
+  --tasks-background: #161A1D;
+  --create-task-button: #579DFF;
+  --task-popup-input: #22272B;
+  --font-heading: 'Segoe UI','Roboto','Oxygen','Ubuntu','Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  --heading-text-color: #B6C2CF;
+  --heading-sub-text: #9FADBC;
+  --input-text: #B6C2CF;
+}
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    font-family: "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
 }
 
 hr {
@@ -17,21 +30,14 @@ hr {
   width: 100vw;
 }
 
+.home-main-container {
+  background: var(--main-background, #ffffff);
+}
+
 .home-main-sub-container {
   display: flex;
   height: calc(100vh - 4.1rem);
-}
-
-.main-sidebar-container {
-  width: 15%;
-  background-color: #D8DFF0;
-}
-
-.sidebar-load-tasks-section{
-  position: absolute;
-  width: 12%;
-  height: 3rem;
-  bottom: 1rem;
+  overflow: auto
 }
 
 .home-main-tasks-container {
@@ -51,7 +57,7 @@ hr {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    background: #3468EF;
+    background: var(--create-task-button, #0052CC);
     border: none;
     padding: 0.5rem;
     margin-top: 1rem;
@@ -69,3 +75,30 @@ hr {
   margin-top: 2rem;
 }
 
+
+.home-main-tasks-heading {
+  color: var(--heading-text-color);
+  padding: 0 0 0.8rem 0.8rem;
+  font-weight: 500;
+}
+
+.home-main-tasks-task-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.home-main-no-tasks-sub-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #828284;
+  margin-top: 5rem;
+}
+
+@media (max-width: 960px) {
+  .main-sidebar-show-container {
+      display: none;
+  }
+}

@@ -19,7 +19,7 @@ export const customStyles: CustomModalStyles = {
     right: "40px",
     bottom: "40px",
     margin: "auto",
-    background: "#fff",
+    background: "#282E33",
     overflow: "auto",
     WebkitOverflowScrolling: "touch",
     borderRadius: "8px",

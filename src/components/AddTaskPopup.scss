@@ -1,126 +1,133 @@
 .task-popup-heading-container {
-    padding: 3% 3% 2%;
-    border-bottom: 1px solid;
-    font-size: 1.6em;
-    font-family: var(--font-family-poppins,"Poppins");
-    font-weight: 700;
-    display: flex;
-    letter-spacing: -1px;
+  padding: 3% 3% 2%;
+  border-bottom: 1px solid black;
+  font-size: 1.6em;
+  font-family: var(--font-heading, "Poppins");
+  font-weight: 700;
+  display: flex;
+  letter-spacing: -1px;
+  color: var(--heading-text-color);
 }
-
 
 .task-popup-close-icon {
-    width: 1.7rem;
-    position: absolute;
-    right: 0px;
-    padding-right: 0.4rem;
-    cursor: pointer;
+  width: 1.7rem;
+  position: absolute;
+  right: 0px;
+  padding-right: 0.4rem;
+  cursor: pointer;
 }
 
-.task-popup-fields-container{
-    padding: 2% 3%;
+.task-popup-fields-container {
+  padding: 2% 3%;
 }
 
-.task-popup-heading{
-    font-size: 1.2em;
-    font-family: var(--font-family-poppins,"Poppins");
-    font-weight: 700;
-    line-height: 1.5;
-    letter-spacing: -1px;
+.task-popup-heading {
+  font-size: 1rem;
+  font-family: var(--font-heading, "Poppins");
+  color: var(--heading-sub-text);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -1px;
 }
 
-.task-popup-addTask-input{
-    display: block;
-    margin: 0;
-    color: inherit;
-    width: 100%;
-    font-family: inherit;
-    font-size: 1.2rem;
-    font-weight: inherit;
-    line-height: 1.8;
-    border: 1px solid black;
-    border-radius: 0.4rem;
-    transition: box-shadow 300ms;
+.task-popup-addTask-input {
+  display: block;
+  margin: 0;
+  color: var(--input-text);
+  width: -webkit-fill-available;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: inherit;
+  line-height: 1.8;
+  border: 2px solid #a6c5e229;
+  border-radius: 0.4rem;
+  background: var(--task-popup-input);
 
+  &.task-popup-addTask-time-input {
+    width: 25%;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: lightblue;
+  }
+}
+
+.task-popup-addTask-input-textbox {
+  resize: none;
+}
+
+.task-popup-dropdown {
+  width: 50%;
+  height: 2rem;
+  border: 2px solid #a6c5e229;
+  margin: 0;
+  color: var(--input-text);
+  background: var(--task-popup-input);
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: inherit;
+  line-height: 1.8;
+  border-radius: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1%;
+  cursor: pointer;
+}
+
+.task-popup-dropdown-arrow {
+  height: -webkit-fill-available;
+}
+
+.task-popup-dropdown-outer-container {
+  position: absolute;
+  width: 50%;
+  height: 6rem;
+  left: 3%;
+  z-index: 999;
+  top: 72%;
+  width: 49%;
+  border: 2px solid #a6c5e229;
+  border-radius: 0.4rem;
+  background: var(--task-popup-input);
+}
+
+.task-popup-dropdown-value-container {
+  padding: 0 0.4rem;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  width: 100%;
+}
+
+.task-popup-createTask-button {
+  opacity: 1;
+  transition: opacity 0.3s ease 0s;
+  margin: 0px 2px;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: var(--create-task-button);
+  border: none;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1rem;
+  font-family: var(--font-heading, "Poppins");
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .task-popup-addTask-input {
     &.task-popup-addTask-time-input {
-        width: 25%;
+      width: 30%;
     }
-
-    &:focus {
-        outline: none;
-        box-shadow: 0.2rem 0.3rem 0.5rem #9db3cd;
-    }
-}
-
-.task-popup-addTask-input-textbox{
-    resize: none;
-}
-
-.task-popup-dropdown{
-    width: 50%;
-    height: 2rem;
-    border: 1px solid black;
-    display: block;
-    margin: 0;
-    color: inherit;
-    font-family: inherit;
-    font-size: 1.2rem;
-    font-weight: inherit;
-    line-height: 1.8;
-    border: 1px solid black;
-    border-radius: 0.4rem;
-    transition: box-shadow 300ms;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1%;
-    cursor: pointer;
-}
-
-.task-popup-dropdown-arrow{
-    height: -webkit-fill-available;
-}
-
-.task-popup-dropdown-outer-container{
-    position: absolute;
-    width: 50%;
-    height: 6rem;
-    left: 3%;
-    z-index: 999;
-    top: 72%;
-    width: 49%;
-    border: 1px solid #020202;
-    border-radius: 0.4rem;
-    background-color: white;
-}
-
-.task-popup-dropdown-value-container{
-    padding: 0 0.4rem;
-    display: flex;
-    height: 100%;
-    align-items: center;
-    width: 100%;
-}
-
-.task-popup-createTask-button{
-    opacity: 1;
-    transition: opacity 0.3s ease 0s;
-    margin: 0px 2px;
-    -webkit-box-flex: 1;
-    flex-grow: 1;
-    flex-shrink: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background-color: #579DFF;
-    border: none;
-    padding: 0.5rem;
-    margin-top: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 1rem;
-    font-family: var(--font-family-poppins, "Poppins");
-    font-weight: 700;
-    line-height: 1.5;
+  }
 }
