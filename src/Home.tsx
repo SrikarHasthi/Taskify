@@ -30,8 +30,10 @@ const Home: React.FC = () => {
             }
         })
         retrieveTodayTodohistory().then((res)=>{
-            if(res && res.data)
+            if(res && res.data){
+                dispatch(setTaskData(res.data.todos))
             console.log("today", res.data);
+            }
         })
     },[])
 
@@ -41,12 +43,12 @@ const Home: React.FC = () => {
         if (localStorage.getItem('expToken')) {
             const expToken = localStorage.getItem('expToken')
             if (expToken === formattedDate) {
-                if (localStorage.getItem(`allTaskData`)) {
-                    const storedTaskdata = localStorage.getItem(`allTaskData`)
-                    if (storedTaskdata != null) {
-                        dispatch(setTaskData(JSON.parse(storedTaskdata)))
-                    }
-                }
+                // if (localStorage.getItem(`allTaskData`)) {
+                //     const storedTaskdata = localStorage.getItem(`allTaskData`)
+                //     if (storedTaskdata != null) {
+                //         dispatch(setTaskData(JSON.parse(storedTaskdata)))
+                //     }
+                // }
             }
             else {
                 if (localStorage.getItem(`allTaskData`)) {

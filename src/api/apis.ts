@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PayloadTaskData, TaskData } from "../Interfaces";
 
 export const apiClient = axios.create({
   baseURL: "http://localhost:8080",
@@ -23,6 +24,19 @@ export const retrieveTodayTodohistory = () => {
   let data = apiClient
     .get("/todohistory/today")
     .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return data;
+};
+
+export const createTodo = (payload: PayloadTaskData) => {
+  let data = apiClient
+    .post("/todoss",payload)
+    .then((res) => {
+      console.log(res);
       return res;
     })
     .catch((err) => {

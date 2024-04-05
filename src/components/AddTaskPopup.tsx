@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { setTaskData } from "../redux/reducers/taskDataReducer";
+import { createTodo } from "../api/apis";
 
 interface Props {
     setAddTaskPopup: React.Dispatch<React.SetStateAction<boolean>>,
@@ -60,19 +61,33 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
             setAddTaskPopup(false)
         }
         else{
-            dispatch(setTaskData([...allTaskData, {
-                id: Date.now(),
+            const task = {
+                id: Date.now().toString(),
                 summary: summary,
                 description: description,
                 priority: priority,
                 time: convertTime(time).toMs(),
                 status: "new",
-            }]))
+            };
+            const payload = {
+                dateCreated: Date.now().toString(),
+                summary: summary,
+                description: description,
+                priority: priority,
+                time: convertTime(time).toMs(),
+                status: "new",
+            };
+            createTodo(payload).then((res) => {
+                if(res && res.data)
+                console.log(res.data);
+            })
+            dispatch(setTaskData([...allTaskData, task]))
             setAddTaskPopup(false)
         }  
     }
 
-    const handleDelete = (id: number) => {
+    const handleDelete = (id: string) => {
+        
         const updatedTaskData = allTaskData.filter((e)=>{
             if(e.id !== id){
                 return e
