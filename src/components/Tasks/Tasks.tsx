@@ -56,12 +56,12 @@ const Tasks = ({status}: Props) => {
         })
         dispatch(setTaskData(newTaskData))
     }
-    const getLocalStorageTime = (id: number | undefined): number => {
+    const getLocalStorageTime = (id: number): number => {
         const storedValue = localStorage.getItem(`${id}`); 
         return storedValue !== null ? parseInt(storedValue) : 0;
     };
 
-    const checkTimeForDone = (id: number | undefined) => {
+    const checkTimeForDone = (id: number) => {
         let task: TaskData | null = null;
 
         const newTaskData: TaskData[] = allTaskData.map((e) => {

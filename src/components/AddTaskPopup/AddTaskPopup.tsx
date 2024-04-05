@@ -6,7 +6,7 @@ import CustomDropdown from "./CustomDropdown";
 import { priorityImages } from "../../StaticData";
 import { capitalizeFirstLetter, convertTime, givePriorityImage, validateTime } from "../../Utils";
 import { useOutsideAlerter } from "../../hooks";
-import { TaskData, priorityInterface } from "../../Interfaces";
+import { PayloadTaskData, TaskData, priorityInterface } from "../../Interfaces";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +69,7 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
             setAddTaskPopup(false)
         }
         else {
-            let task = {
+            let task: PayloadTaskData = {
                 dateCreated: Date.now().toString(),
                 summary: summary,
                 description: description,
@@ -80,15 +80,16 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
             createTodo(task).then((res) => {
                 if (res && res.data) {
                     console.log(res.data);
-                    task = res.data;
+                    const newtask: TaskData = { ...task, id: res.data.id };
+                    dispatch(setTaskData([...allTaskData, newtask]))
+
                 }
             })
-            dispatch(setTaskData([...allTaskData, task]))
             setAddTaskPopup(false)
         }
     }
 
-    const handleDelete = (id: number | undefined) => {
+    const handleDelete = (id: number) => {
 
         deleteTodo(id).then((res) => {
             if (res && res.data) {

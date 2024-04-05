@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 
 interface Props {
   targetTime: number,
-  taskId: number | undefined,
-  checkTimeForDone: (id: number | undefined) => void,
+  taskId: number,
+  checkTimeForDone: (id: number) => void,
 }
 
 const CountdownTimer = ({ targetTime, taskId, checkTimeForDone }: Props) => {

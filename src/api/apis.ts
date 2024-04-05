@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TaskData } from "../Interfaces";
+import { PayloadTaskData, TaskData } from "../Interfaces";
 
 export const apiClient = axios.create({
   baseURL: "http://localhost:8080",
@@ -32,7 +32,7 @@ export const retrieveTodayTodohistory = () => {
   return data;
 };
 
-export const createTodo = (payload: TaskData) => {
+export const createTodo = (payload: PayloadTaskData) => {
   let data = apiClient
     .post("/todoss",payload)
     .then((res) => {
@@ -44,7 +44,7 @@ export const createTodo = (payload: TaskData) => {
   return data;
 };
 
-export const deleteTodo = (id: number | undefined) => {
+export const deleteTodo = (id: number) => {
   let data = apiClient
     .delete(`/todos/${id}`)
     .then((res) => {
@@ -56,7 +56,7 @@ export const deleteTodo = (id: number | undefined) => {
   return data;
 };
 
-export const updateTodos = (id: number | undefined, payload: TaskData) => {
+export const updateTodos = (id: number, payload: TaskData) => {
   let data = apiClient
     .put(`/todos/${id}`,payload)
     .then((res) => {
