@@ -7,7 +7,6 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { getAuth, signInWithPopup } from "firebase/auth";
 import btn_google_signin_dark_normal_web from './btn_google_signin_dark_normal_web@2x.png';
 import { useAuth } from "../AuthContext";
-import { retrieveTodos } from "../api/apis";
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -124,19 +123,19 @@ const validate = () => {
 
 const ProceedLogin = async() => {
     //e.preventDefault();
-    retrieveTodos().then((res)=>{
-        if(res && res.data)
-        console.log(res.data);
-    })
-    if (await authContext.login(username, password)) {
-        console.log("hello");
-        toast.success('Success');
-        usenavigate("/todos")
-    }
-    else{
-        console.log("failed");
+    // retrieveTodos().then((res)=>{
+    //     if(res && res.data)
+    //     console.log(res.data);
+    // })
+    // if (await authContext.login(username, password)) {
+    //     console.log("hello");
+    //     toast.success('Success');
+    //     usenavigate("/todos")
+    // }
+    // else{
+    //     console.log("failed");
         
-    }
+    // }
 }
 
     // const ProceedLoginusingAPI = () => {

@@ -7,12 +7,22 @@ export const apiClient = axios.create({
   }
 });
 
-export const retrieveTodos = () => {
+export const retrieveAllTodohistory = () => {
   let data = apiClient
-    .get("/todoss")
+    .get("/todohistory/all")
     .then((res) => {
-      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return data;
+};
 
+export const retrieveTodayTodohistory = () => {
+  let data = apiClient
+    .get("/todohistory/today")
+    .then((res) => {
       return res;
     })
     .catch((err) => {
@@ -30,7 +40,6 @@ export const updateTodos = () => {
     time: 5600000,
     status: "new",
     dateCreated: "1708281792855",
-    todoHistoryId: 1011,
   };
   let data = apiClient
     .put("/todos/10005",payload)

@@ -24,3 +24,9 @@ export interface TimeConverter {
   toAlphaNumericTime(): string,
   toMs(): number,
 }
+
+export interface allTasksHistory {
+  todoHistoryId: number,
+  dateCreated: string,
+  todos: TaskData[],
+}

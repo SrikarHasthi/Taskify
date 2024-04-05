@@ -9,26 +9,29 @@ import Tasks from "./components/Tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setTaskData } from "./redux/reducers/taskDataReducer";
-import { retrieveTodos, updateTodos } from "./api/apis";
+import { retrieveAllTodohistory, retrieveTodayTodohistory } from "./api/apis";
 import { useAuth } from "./AuthContext";
 
 import empty from './assets/empty.png';
+import { allTasksHistory } from "./Interfaces";
 
 const Home: React.FC = () => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const dispatch = useDispatch()
+    const [allTasksHistory, setAllTaskHistory] = useState<allTasksHistory[] | null>(null)
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const authContext = useAuth();
 
     useEffect(()=>{
-        updateTodos().then((res)=>{
-            if(res && res.data)
-            console.log(res);
+        retrieveAllTodohistory().then((res)=>{
+            if(res && res.data){
+                setAllTaskHistory(res.data);
+            }
         })
-        retrieveTodos().then((res)=>{
+        retrieveTodayTodohistory().then((res)=>{
             if(res && res.data)
-            console.log(res.data);
+            console.log("today", res.data);
         })
     },[])
 
@@ -78,7 +81,7 @@ const Home: React.FC = () => {
             {/* <hr style={{width: "99%"}}/> */}
             <div style={{ width: "100%", background: "rgb(0 0 0 / 17%)", height: "2px" }}></div>
             <div className="home-main-sub-container">
-                <Sidebar />
+                <Sidebar allTasksHistory={allTasksHistory}/>
                 <div className="home-main-tasks-container">
                     <div className="home-main-add-task-button" onClick={() => setAddTaskPopup(true)}>Add Task</div>
                     <Modal
