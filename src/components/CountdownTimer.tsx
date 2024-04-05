@@ -6,8 +6,8 @@ import { setTaskPopup } from "../redux/reducers/taskPopupReducer";
 
 interface Props {
   targetTime: number,
-  taskId: string,
-  checkTimeForDone: (id: string) => void,
+  taskId: number | undefined,
+  checkTimeForDone: (id: number | undefined) => void,
 }
 
 const CountdownTimer = ({ targetTime, taskId, checkTimeForDone }: Props) => {

@@ -48,7 +48,8 @@ export const priorityImages =
 export const savedTasks = ():TaskData[] => {
  return [
     {
-      id: Date.now().toString(),
+      id: 12111,
+      dateCreated: Date.now().toString(),
       summary: "Learn Backend",
       description: "",
       priority: "medium",
@@ -56,7 +57,8 @@ export const savedTasks = ():TaskData[] => {
       status: "new",
     },
     {
-      id: (Date.now()+100).toString(),
+      id: 12112,
+      dateCreated: (Date.now()+100).toString(),
       summary: "Leetcode",
       description: "",
       priority: "medium",

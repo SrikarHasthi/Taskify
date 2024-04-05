@@ -12,14 +12,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { setTaskData } from "../redux/reducers/taskDataReducer";
-import { createTodo } from "../api/apis";
+import { createTodo, deleteTodo, updateTodos } from "../api/apis";
 
 interface Props {
     setAddTaskPopup: React.Dispatch<React.SetStateAction<boolean>>,
     taskData?: TaskData[],
 }
 
-const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
+const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const [priorityValue, setPriorityValue] = useState<priorityInterface>(priorityImages[1])
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
@@ -29,47 +29,47 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
     const [time, setTime] = useState<string>((taskData && taskData[0]) ? convertTime(taskData[0].time).toAlphaNumericTime : "")
     const dispatch = useDispatch()
     const dropdownRef = useRef(null)
-    useOutsideAlerter(dropdownRef, ()=>{
+    useOutsideAlerter(dropdownRef, () => {
         setShowDropdown(false)
     })
-    const changeDropdown = (data: priorityInterface):void =>{
+    const changeDropdown = (data: priorityInterface): void => {
         setPriority(data.value)
         setPriorityValue(data)
         setShowDropdown(false)
     }
-    const handleSubmit = ():void => {
-        if(summary === "" || time === ""){
+    const handleSubmit = (): void => {
+        if (summary === "" || time === "") {
             toast.error("Field is empty")
         }
         else if (!validateTime(time)) {
             toast.error("Enter time in format 1h 5m")
         }
-        else if((taskData && taskData[0])){
-            const updatedTaskData = allTaskData.map((e)=>{
-                if(e.id === taskData[0].id){
-                    return {
-                        ...e,
-                        description: description,
-                        summary: summary,
-                        priority: priorityValue.value,
-                        time: convertTime(time).toMs(),
-                    }
+        else if ((taskData && taskData[0])) {
+            let updatedTask = {
+                ...taskData[0],
+                description: description,
+                summary: summary,
+                priority: priorityValue.value,
+                time: convertTime(time).toMs(),
+            }
+
+            updateTodos(taskData[0].id, updatedTask).then((res) => {
+                if (res && res.data) {
+                    updatedTask = res.data;
+                    console.log("updated", res.data);
+                }
+            })
+            const updatedTaskData = allTaskData.map((e) => {
+                if (e.id === taskData[0].id) {
+                    return updatedTask;
                 }
                 return e
             })
             dispatch(setTaskData(updatedTaskData))
             setAddTaskPopup(false)
         }
-        else{
-            const task = {
-                id: Date.now().toString(),
-                summary: summary,
-                description: description,
-                priority: priority,
-                time: convertTime(time).toMs(),
-                status: "new",
-            };
-            const payload = {
+        else {
+            let task = {
                 dateCreated: Date.now().toString(),
                 summary: summary,
                 description: description,
@@ -77,19 +77,26 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
                 time: convertTime(time).toMs(),
                 status: "new",
             };
-            createTodo(payload).then((res) => {
-                if(res && res.data)
-                console.log(res.data);
+            createTodo(task).then((res) => {
+                if (res && res.data) {
+                    console.log(res.data);
+                    task = res.data;
+                }
             })
             dispatch(setTaskData([...allTaskData, task]))
             setAddTaskPopup(false)
-        }  
+        }
     }
 
-    const handleDelete = (id: string) => {
-        
-        const updatedTaskData = allTaskData.filter((e)=>{
-            if(e.id !== id){
+    const handleDelete = (id: number | undefined) => {
+
+        deleteTodo(id).then((res) => {
+            if (res && res.data) {
+                console.log(res.data);
+            }
+        })
+        const updatedTaskData = allTaskData.filter((e) => {
+            if (e.id !== id) {
                 return e
             }
             else {
@@ -105,34 +112,34 @@ const AddTaskPopup = ({setAddTaskPopup, taskData}: Props) => {
         <div>
             <div className="task-popup-heading-container">
                 <div>New Task</div>
-                <img src={closeIcon} className="task-popup-close-icon" onClick={(e)=> {e.stopPropagation(); setAddTaskPopup(false)}} alt="close icon"/>
+                <img src={closeIcon} className="task-popup-close-icon" onClick={(e) => { e.stopPropagation(); setAddTaskPopup(false) }} alt="close icon" />
             </div>
             <div className="task-popup-fields-container">
                 <div className="task-popup-heading">Summary</div>
-                <input className="task-popup-addTask-input" value={summary} onChange={(e)=>{setSummary(e.target.value)}}></input>
+                <input className="task-popup-addTask-input" value={summary} onChange={(e) => { setSummary(e.target.value) }}></input>
                 <div className="task-popup-heading">Description</div>
-                <textarea className="task-popup-addTask-input task-popup-addTask-input-textbox" value={description} onChange={(e)=>{setDescription(e.target.value)}}></textarea>
+                <textarea className="task-popup-addTask-input task-popup-addTask-input-textbox" value={description} onChange={(e) => { setDescription(e.target.value) }}></textarea>
                 <div className="task-popup-heading">Priority</div>
-                <div className="task-popup-dropdown" onClick={()=>{setShowDropdown(true)}}>
-                <div  className="task-popup-dropdown-value-container">
-                            <img src={givePriorityImage(priority)} style={{height:"68%"}} alt="priority icon"/>
-                            <span style={{paddingLeft:"0.6rem"}}>{capitalizeFirstLetter(priority)}</span>
-                        </div>
-                    <img src={dropDownArrow}  className="task-popup-dropdown-arrow" alt="down icon"/>
+                <div className="task-popup-dropdown" onClick={() => { setShowDropdown(true) }}>
+                    <div className="task-popup-dropdown-value-container">
+                        <img src={givePriorityImage(priority)} style={{ height: "68%" }} alt="priority icon" />
+                        <span style={{ paddingLeft: "0.6rem" }}>{capitalizeFirstLetter(priority)}</span>
+                    </div>
+                    <img src={dropDownArrow} className="task-popup-dropdown-arrow" alt="down icon" />
                     {showDropdown ? <div className="task-popup-dropdown-outer-container" ref={dropdownRef}>
-                        <CustomDropdown changeDropdown={changeDropdown} setPriority={setPriority}/>
-                    </div> : ""}      
+                        <CustomDropdown changeDropdown={changeDropdown} setPriority={setPriority} />
+                    </div> : ""}
                 </div>
                 <div className="task-popup-heading">Set Time</div>
-                <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="4h 30m" value={time} onChange={(e)=>{setTime(e.target.value)}}/>
-                <button className="task-popup-createTask-button" onClick={(e)=> {e.stopPropagation(); handleSubmit()}}>{(taskData && taskData[0]) ? "Done" : "Create"}</button>
+                <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="4h 30m" value={time} onChange={(e) => { setTime(e.target.value) }} />
+                <button className="task-popup-createTask-button" onClick={(e) => { e.stopPropagation(); handleSubmit() }}>{(taskData && taskData[0]) ? "Done" : "Create"}</button>
                 {
-                    (taskData && taskData[0]) ? <button className="task-popup-createTask-button" onClick={(e)=> {e.stopPropagation(); handleDelete(taskData[0].id)}}>Delete</button> 
-                    : ""
+                    (taskData && taskData[0]) ? <button className="task-popup-createTask-button" onClick={(e) => { e.stopPropagation(); handleDelete(taskData[0].id) }}>Delete</button>
+                        : ""
                 }
-                
+
             </div>
-            <ToastContainer 
+            <ToastContainer
                 position="bottom-right"
                 hideProgressBar={true}
             />

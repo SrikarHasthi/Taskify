@@ -11,22 +11,23 @@ export interface priorityInterface {
 }
 
 export interface TaskData {
-  id: string,
+  id?: number,
   summary: string,
   description: string,
   priority: string,
   time: number,
+  dateCreated: string,
   status: string,
 }
 
-export interface PayloadTaskData {
-  dateCreated: string,
-  summary: string,
-  description: string,
-  priority: string,
-  time: number,
-  status: string,
-}
+// export interface PayloadTaskData {
+//   dateCreated: string,
+//   summary: string,
+//   description: string,
+//   priority: string,
+//   time: number,
+//   status: string,
+// }
 
 export interface TimeConverter {
   toDisplayTime(): string,

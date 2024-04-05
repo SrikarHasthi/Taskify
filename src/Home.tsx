@@ -23,21 +23,21 @@ const Home: React.FC = () => {
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const authContext = useAuth();
 
-    useEffect(()=>{
-        retrieveAllTodohistory().then((res)=>{
-            if(res && res.data){
+    useEffect(() => {
+        retrieveAllTodohistory().then((res) => {
+            if (res && res.data) {
                 setAllTaskHistory(res.data);
             }
         })
-        retrieveTodayTodohistory().then((res)=>{
-            if(res && res.data){
+        retrieveTodayTodohistory().then((res) => {
+            if (res && res.data) {
                 dispatch(setTaskData(res.data.todos))
-            console.log("today", res.data);
+                console.log("today", res.data);
             }
         })
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toLocaleDateString();
         if (localStorage.getItem('expToken')) {
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
             {/* <hr style={{width: "99%"}}/> */}
             <div style={{ width: "100%", background: "rgb(0 0 0 / 17%)", height: "2px" }}></div>
             <div className="home-main-sub-container">
-                <Sidebar allTasksHistory={allTasksHistory}/>
+                <Sidebar allTasksHistory={allTasksHistory} />
                 <div className="home-main-tasks-container">
                     <div className="home-main-add-task-button" onClick={() => setAddTaskPopup(true)}>Add Task</div>
                     <Modal
@@ -106,7 +106,7 @@ const Home: React.FC = () => {
                     </Modal>
                     {
                         isLoading ?
-                            allTaskData.length > 0 ?
+                            allTaskData && allTaskData.length > 0 ?
                                 <div className="home-main-tasks-sub-conatiner">
                                     <div className="home-main-tasks-task-container">
                                         <div className="home-main-tasks-heading">TO DO</div>
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                                 :
                                 <div className="home-main-no-tasks-container">
                                     <div className="home-main-no-tasks-sub-container">
-                                        <img src={empty} alt="empty"/>
+                                        <img src={empty} alt="empty" />
                                         ADD A TASK TO GET STARTED
                                     </div>
                                 </div>

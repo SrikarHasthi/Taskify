@@ -22,7 +22,7 @@ interface Props {
 const Tasks = ({status}: Props) => {
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
-    const [selectedTaskId, setSelectedTaskId] = useState<string>()
+    const [selectedTaskId, setSelectedTaskId] = useState<number>()
     const dispatch = useDispatch()
     const handleStatus = (task: TaskData, status:string, e:React.MouseEvent<HTMLImageElement, MouseEvent>):void => {
         e.stopPropagation()
@@ -56,12 +56,12 @@ const Tasks = ({status}: Props) => {
         })
         dispatch(setTaskData(newTaskData))
     }
-    const getLocalStorageTime = (id: string): number => {
+    const getLocalStorageTime = (id: number | undefined): number => {
         const storedValue = localStorage.getItem(`${id}`); 
         return storedValue !== null ? parseInt(storedValue) : 0;
     };
 
-    const checkTimeForDone = (id: string) => {
+    const checkTimeForDone = (id: number | undefined) => {
         let task: TaskData | null = null;
 
         const newTaskData: TaskData[] = allTaskData.map((e) => {
