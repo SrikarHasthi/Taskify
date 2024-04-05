@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import "../components/Tasks.scss"
-import play from "../assets/play.svg"
-import pause from "../assets/pause.svg"
-import stop from "../assets/stop.svg"
-import { TaskData } from "../Interfaces";
+import "./Tasks.scss"
+import play from "../../assets/play.svg"
+import pause from "../../assets/pause.svg"
+import stop from "../../assets/stop.svg"
+import { TaskData } from "../../Interfaces";
 import Modal from 'react-modal';
-import { convertTime, givePriorityImage } from "../Utils";
+import { convertTime, givePriorityImage } from "../../Utils";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { customStyles } from "../StaticData";
-import AddTaskPopup from "./AddTaskPopup";
-import { setTaskData } from "../redux/reducers/taskDataReducer";
-import CountdownTimer from "./CountdownTimer";
+import { RootState } from "../../redux/store";
+import { customStyles } from "../../StaticData";
+import AddTaskPopup from "../AddTaskPopup/AddTaskPopup";
+import { setTaskData } from "../../redux/reducers/taskDataReducer";
+import CountdownTimer from "../CountdownTimer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

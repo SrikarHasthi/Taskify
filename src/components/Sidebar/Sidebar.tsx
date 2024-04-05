@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setTaskData } from "../redux/reducers/taskDataReducer";
-import { savedTasks } from "../StaticData";
-import comingSoon from "../assets/coming-soon.svg";
-import question from "../assets/question-circle-svgrepo-com.svg";
+import { setTaskData } from "../../redux/reducers/taskDataReducer";
+import { savedTasks } from "../../StaticData";
+import comingSoon from "../../assets/coming-soon.svg";
+import question from "../../assets/question-circle-svgrepo-com.svg";
 import "./Sidebar.scss"
 import { Tooltip } from "react-tooltip";
-import { allTasksHistory } from "../Interfaces";
-import { convertTime } from "../Utils";
-import downArrow from '../assets/down-arrow-svgrepo-com.svg';
-import sideArrow from '../assets/side-arrow-svgrepo-com.svg';
+import { allTasksHistory } from "../../Interfaces";
+import { convertTime } from "../../Utils";
+import downArrow from '../../assets/down-arrow-svgrepo-com.svg';
+import sideArrow from '../../assets/side-arrow-svgrepo-com.svg';
 
 interface Props {
     allTasksHistory: allTasksHistory[] | null,

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "../components/Login.scss"
+import "./Login.scss"
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { GoogleAuthProvider } from "firebase/auth";
 // import { getAuth, signInWithPopup } from "firebase/auth";
 import btn_google_signin_dark_normal_web from './btn_google_signin_dark_normal_web@2x.png';
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../AuthContext";
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";

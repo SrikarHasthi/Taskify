@@ -1,18 +1,18 @@
 import React, { useState, useRef } from "react";
-import closeIcon from "../assets/close-icon.svg"
-import "../components/AddTaskPopup.scss"
-import dropDownArrow from "../assets/dropdown-arrow-svgrepo-com.svg"
+import closeIcon from "../../assets/close-icon.svg"
+import "./AddTaskPopup.scss"
+import dropDownArrow from "../../assets/dropdown-arrow-svgrepo-com.svg"
 import CustomDropdown from "./CustomDropdown";
-import { priorityImages } from "../StaticData";
-import { capitalizeFirstLetter, convertTime, givePriorityImage, validateTime } from "../Utils";
-import { useOutsideAlerter } from "../hooks";
-import { TaskData, priorityInterface } from "../Interfaces";
+import { priorityImages } from "../../StaticData";
+import { capitalizeFirstLetter, convertTime, givePriorityImage, validateTime } from "../../Utils";
+import { useOutsideAlerter } from "../../hooks";
+import { TaskData, priorityInterface } from "../../Interfaces";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { setTaskData } from "../redux/reducers/taskDataReducer";
-import { createTodo, deleteTodo, updateTodos } from "../api/apis";
+import { RootState } from "../../redux/store";
+import { setTaskData } from "../../redux/reducers/taskDataReducer";
+import { createTodo, deleteTodo, updateTodos } from "../../api/apis";
 
 interface Props {
     setAddTaskPopup: React.Dispatch<React.SetStateAction<boolean>>,

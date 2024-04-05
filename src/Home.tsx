@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import Modal from 'react-modal';
 import './App.css';
-import AddTaskPopup from './components/AddTaskPopup';
+import AddTaskPopup from './components/AddTaskPopup/AddTaskPopup';
 import { customStyles } from './StaticData';
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import Tasks from "./components/Tasks";
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Tasks from "./components/Tasks/Tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setTaskData } from "./redux/reducers/taskDataReducer";

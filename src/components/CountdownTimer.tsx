@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import "../components/Header.scss"
 import { useCountdown } from "../hooks";
 import { useDispatch } from "react-redux";
-import { setTaskPopup } from "../redux/reducers/taskPopupReducer";
 
 interface Props {
   targetTime: number,

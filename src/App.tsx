@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import './App.css';
 import Home from './Home';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AuthProvider, { useAuth } from './AuthContext';
 
