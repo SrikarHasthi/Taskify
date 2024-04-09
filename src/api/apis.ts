@@ -82,7 +82,7 @@ export const updateTodos = (id: number, userId: number, payload: TaskData) => {
 
 export const executeBasicAuthentication = (token: string) => {
   let data = apiClient
-    .get("/todoss", {
+    .get("/basicauth", {
       headers: {
         Authorization: token,
       },

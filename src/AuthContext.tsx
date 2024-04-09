@@ -37,55 +37,62 @@ export default function AuthProvider({ children }: Props) {
     //3: Put some state in the context
     const [isAuthenticated, setAuthenticated] = useState<boolean>(false)
     const [userData, setUserData] = useState<UserData>({ userId: 0, email: '', password: '', todoHistory: [] });
-    const [token, setToken] = useState<string | null>(null)
+    const [token, setToken] = useState<string | null>(null) //check if i need this
+
+    // const login = async (username: string, password: string): Promise<boolean> => {
+    //     let data = await getUserDetails().then((res) => {
+    //         if (res && res.data) {
+    //             console.log(res.data);
+    //             setUserData(res.data);
+
+    //             if (username === 'srikar' && password === 'dummy') {
+    //                 setAuthenticated(true);
+    //                 return true;
+    //             }
+    //             else {
+    //                 setAuthenticated(false)
+    //                 return false
+    //             }
+
+    //         }
+    //         return false
+    //     })
+    //     return data;
+    // }
 
     const login = async (username: string, password: string): Promise<boolean> => {
-        let data = await getUserDetails().then((res) => {
-            if (res && res.data) {
-                console.log(res.data);
-                setUserData(res.data);
+        const baToken = 'Basic ' + window.btoa(username + ":" + password)
 
-                if (username === 'srikar' && password === 'dummy') {
-                    setAuthenticated(true);
-                    return true;
-                }
-                else {
-                    setAuthenticated(false)
-                    return false
-                }
+        let data = await executeBasicAuthentication(baToken).then(async (res) => {
+            console.log(res);
+
+            if (res && res.status === 200) {
+                setAuthenticated(true)
+                setToken(baToken) //check if i need this
+                apiClient.interceptors.request.use((config) => {
+                    console.log("dfsdd");
+
+                    config.headers.Authorization = baToken
+                    return config
+                })
+                await getUserDetails().then((res) => {
+                    if (res && res.data) {
+                        console.log(res.data);
+                        setUserData(res.data);
+                        return true;
+                    }
+                })
 
             }
-            return false
+            else {
+                console.log("wrong username or password");
+
+                logout()
+                return false
+            }
         })
-        return data;
+        return true;
     }
-
-    // const login = async (username: string, password: string):Promise<boolean> => {
-    //     const baToken = 'Basic ' + window.btoa(username + ":" + password)
-
-    //     let data = await executeBasicAuthentication(baToken).then((res)=> {
-    //         console.log(res);
-
-    //         if(res && res.status === 200){
-    //             setAuthenticated(true)
-    //             setToken(baToken)
-    //             apiClient.interceptors.request.use((config) => {
-    //                 console.log("dfsdd");
-
-    //                 config.headers.Authorization = baToken
-    //                 return config
-    //             })
-    //             return true
-    //         }
-    //         else {
-    //             console.log("wrong username or password");
-
-    //             logout()
-    //             return false
-    //         }
-    //     })
-    //     return true
-    // }
 
     const logout = () => {
         setAuthenticated(false)
