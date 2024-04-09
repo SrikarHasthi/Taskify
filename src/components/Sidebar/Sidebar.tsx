@@ -25,6 +25,8 @@ const Sidebar = ({ allTasksHistory }: Props) => {
 
 
     useEffect(() => {
+        console.log(allTasksHistory, "sdfsdf");
+        
         const filteredData = allTasksHistory && allTasksHistory.filter((e) => {
             return e.todos.length > 0;
         });

@@ -14,6 +14,7 @@ import { useAuth } from "./AuthContext";
 
 import empty from './assets/empty.png';
 import { allTasksHistory } from "./Interfaces";
+import { ToastContainer } from "react-toastify";
 
 const Home: React.FC = () => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
@@ -22,14 +23,15 @@ const Home: React.FC = () => {
     const [allTasksHistory, setAllTaskHistory] = useState<allTasksHistory[] | null>(null)
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const authContext = useAuth();
+    const userDetails = authContext.userData;
 
     useEffect(() => {
-        retrieveAllTodohistory().then((res) => {
+        retrieveAllTodohistory(userDetails.userId).then((res) => {
             if (res && res.data) {
                 setAllTaskHistory(res.data);
             }
         })
-        retrieveTodayTodohistory().then((res) => {
+        retrieveTodayTodohistory(userDetails.userId).then((res) => {
             if (res && res.data) {
                 dispatch(setTaskData(res.data.todos))
                 console.log("today", res.data);
@@ -132,6 +134,10 @@ const Home: React.FC = () => {
                     }
                 </div>
             </div>
+            <ToastContainer
+                position="bottom-right"
+                hideProgressBar={true}
+            />
         </div>
     )
 }

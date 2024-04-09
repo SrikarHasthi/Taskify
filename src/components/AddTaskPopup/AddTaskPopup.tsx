@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setTaskData } from "../../redux/reducers/taskDataReducer";
 import { createTodo, deleteTodo, updateTodos } from "../../api/apis";
+import { useAuth } from "../../AuthContext";
 
 interface Props {
     setAddTaskPopup: React.Dispatch<React.SetStateAction<boolean>>,
@@ -28,6 +29,8 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
     const [priority, setPriority] = useState<string>((taskData && taskData[0]) ? capitalizeFirstLetter(taskData[0].priority) : capitalizeFirstLetter(priorityImages[1].value))
     const [time, setTime] = useState<string>((taskData && taskData[0]) ? convertTime(taskData[0].time).toAlphaNumericTime : "")
     const dispatch = useDispatch()
+    const authContext = useAuth()
+    const userDetails = authContext.userData
     const dropdownRef = useRef(null)
     useOutsideAlerter(dropdownRef, () => {
         setShowDropdown(false)
@@ -53,7 +56,7 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
                 time: convertTime(time).toMs(),
             }
 
-            updateTodos(taskData[0].id, updatedTask).then((res) => {
+            updateTodos(taskData[0].id, userDetails.userId, updatedTask).then((res) => {
                 if (res && res.data) {
                     updatedTask = res.data;
                     console.log("updated", res.data);
@@ -77,7 +80,7 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
                 time: convertTime(time).toMs(),
                 status: "new",
             };
-            createTodo(task).then((res) => {
+            createTodo(task, userDetails.userId).then((res) => {
                 if (res && res.data) {
                     console.log(res.data);
                     const newtask: TaskData = { ...task, id: res.data.id };

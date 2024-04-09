@@ -8,9 +8,9 @@ export const apiClient = axios.create({
   }
 });
 
-export const retrieveAllTodohistory = () => {
+export const getUserDetails = () => {
   let data = apiClient
-    .get("/todohistory/all")
+    .get("/users/101")
     .then((res) => {
       return res;
     })
@@ -20,9 +20,9 @@ export const retrieveAllTodohistory = () => {
   return data;
 };
 
-export const retrieveTodayTodohistory = () => {
+export const retrieveAllTodohistory = (id: number) => {
   let data = apiClient
-    .get("/todohistory/today")
+    .get(`/todohistory/${id}`)
     .then((res) => {
       return res;
     })
@@ -32,9 +32,21 @@ export const retrieveTodayTodohistory = () => {
   return data;
 };
 
-export const createTodo = (payload: PayloadTaskData) => {
+export const retrieveTodayTodohistory = (id: number) => {
   let data = apiClient
-    .post("/todoss",payload)
+    .get(`/todohistory/${id}/today`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return data;
+};
+
+export const createTodo = (payload: PayloadTaskData, id: number) => {
+  let data = apiClient
+    .post(`/todoss/${id}`,payload)
     .then((res) => {
       return res;
     })
@@ -56,9 +68,9 @@ export const deleteTodo = (id: number) => {
   return data;
 };
 
-export const updateTodos = (id: number, payload: TaskData) => {
+export const updateTodos = (id: number, userId: number, payload: TaskData) => {
   let data = apiClient
-    .put(`/todos/${id}`,payload)
+    .put(`/todos/${userId}/${id}`,payload)
     .then((res) => {
       return res;
     })

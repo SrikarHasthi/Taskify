@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "./Login.scss"
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { GoogleAuthProvider } from "firebase/auth";
 // import { getAuth, signInWithPopup } from "firebase/auth";
-import btn_google_signin_dark_normal_web from './btn_google_signin_dark_normal_web@2x.png';
+// import btn_google_signin_dark_normal_web from './btn_google_signin_dark_normal_web@2x.png';
 import { useAuth } from "../../AuthContext";
 
 // Import the functions you need from the SDKs you need
@@ -39,10 +39,10 @@ const Login = () => {
     const usenavigate = useNavigate();
     // const provider = new GoogleAuthProvider();
     // const auth = getAuth();
-    
+
     // const logg = ()=>{
     //     signInWithPopup(auth, provider).then((result) => {
-            
+
     //         // This gives you a Google Access Token. You can use it to access the Google API.
     //         const credential = GoogleAuthProvider.credentialFromResult(result);
     //         const token = credential.accessToken;
@@ -104,39 +104,38 @@ const Login = () => {
     //         // ...
     //       });
     // }
-//     useEffect(()=>{
-// sessionStorage.clear();
-//     },[]);
-    
-const validate = () => {
-    let result = true;
-    if (username === '' || username === null) {
-        result = false;
-        toast.warning('Please Enter Username');
-    }
-    if (password === '' || password === null) {
-        result = false;
-        toast.warning('Please Enter Password');
-    }
-    return result;
-}
+    //     useEffect(()=>{
+    // sessionStorage.clear();
+    //     },[]);
 
-const ProceedLogin = async() => {
-    //e.preventDefault();
-    // retrieveTodos().then((res)=>{
-    //     if(res && res.data)
-    //     console.log(res.data);
-    // })
-    // if (await authContext.login(username, password)) {
-    //     console.log("hello");
-    //     toast.success('Success');
-    //     usenavigate("/todos")
-    // }
-    // else{
-    //     console.log("failed");
-        
-    // }
-}
+    const validate = () => {
+        let result = true;
+        if (username === '' || username === null) {
+            result = false;
+            toast.warning('Please Enter Username');
+        }
+        if (password === '' || password === null) {
+            result = false;
+            toast.warning('Please Enter Password');
+        }
+        return result;
+    }
+
+    const ProceedLogin = async () => {
+        // e.preventDefault();
+        // retrieveTodos().then((res)=>{
+        //     if(res && res.data)
+        //     console.log(res.data);
+        // })
+        if (validate() && await authContext.login(username, password)) {
+            toast.success('Success');
+            usenavigate("/home")
+        }
+        else {
+            console.log("failed");
+
+        }
+    }
 
     // const ProceedLoginusingAPI = () => {
     //     e.preventDefault();
@@ -198,7 +197,7 @@ const ProceedLogin = async() => {
                             </div>
                         </div>
                         <div className="card-footer">
-                            <div onClick={ProceedLogin} className="btn btn-primary" style={{ marginRight: '15px' }}>Login</div> 
+                            <div onClick={ProceedLogin} className="btn btn-primary" style={{ marginRight: '15px' }}>Login</div>
                             <Link className="btn btn-success" to={'/register'}>New User</Link>
                             {/* <div style={{ marginLeft: '15%' }}> or </div>
                             <div onClick={logg} >
@@ -209,6 +208,10 @@ const ProceedLogin = async() => {
                     </div>
                 </form>
             </div>
+            <ToastContainer
+                position="bottom-right"
+                hideProgressBar={true}
+            />
         </div>
     );
 }

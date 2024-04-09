@@ -10,6 +10,13 @@ export interface priorityInterface {
   imgSrc: string,
 }
 
+export interface UserData {
+  userId: number,
+  email: string,
+  password: string,
+  todoHistory: allTasksHistory[],
+}
+
 export interface PayloadTaskData {
   summary: string,
   description: string,

@@ -18,18 +18,19 @@ const AuthenticatedRoute = ({children}: Props) => {
   if(authContext.isAuthenticated)
       return children
 
-  return <Navigate to="/" />
+  return <Navigate to="/login" />
 }
   return (
     <div className="App">
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            {/* <Route path='/' element= {<Login/>}></Route> */}
-            <Route path='/' element= {
-              // <AuthenticatedRoute>
+          <Route path='/' element={<Navigate to="/login" />}></Route>
+            <Route path='/login' element= {<Login/>}></Route>
+            <Route path='/home' element= {
+              <AuthenticatedRoute>
                 <Home/>
-            // </AuthenticatedRoute>
+            </AuthenticatedRoute>
             }></Route>
           </Routes>
         </BrowserRouter>
