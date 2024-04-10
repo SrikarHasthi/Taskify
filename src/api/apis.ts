@@ -5,6 +5,7 @@ export const apiClient = axios.create({
   baseURL: "http://localhost:8080",
   headers: {
     accept: 'application/json',
+    "Content-Type": 'application/json'
   }
 });
 
@@ -87,6 +88,18 @@ export const executeBasicAuthentication = (token: string) => {
         Authorization: token,
       },
     })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  return data;
+};
+
+export const executeJwtAuthentication = (username: string, password: string) => {
+  let data = apiClient
+    .post("/authenticate", {username, password})
     .then((res) => {
       return res;
     })
