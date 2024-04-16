@@ -11,7 +11,7 @@ export const apiClient = axios.create({
 
 export const getUserDetails = () => {
   let data = apiClient
-    .get("/users/101")
+    .get("/user-details")
     .then((res) => {
       return res;
     })

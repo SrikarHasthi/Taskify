@@ -60,19 +60,52 @@ export default function AuthProvider({ children }: Props) {
     //     return data;
     // }
 
-    // const login = async (username: string, password: string): Promise<boolean> => {
-    //     const baToken = 'Basic ' + window.btoa(username + ":" + password)
+    const login = async (username: string, password: string): Promise<boolean> => {
+        const baToken = 'Basic ' + window.btoa(username + ":" + password)
 
-    //     let data = await executeBasicAuthentication(baToken).then(async (res) => {
+        let data = await executeBasicAuthentication(baToken).then(async (res) => {
+            console.log(res);
+
+            if (res && res.status === 200) {
+                setAuthenticated(true)
+                setToken(baToken) //check if i need this
+                apiClient.interceptors.request.use((config) => {
+                    console.log("dfsdd");
+
+                    config.headers.Authorization = baToken
+                    return config
+                })
+                await getUserDetails().then((res2) => {
+                    if (res2 && res2.data) {
+                        setUserData(res2.data);
+                        return true;
+                    }
+                })
+
+            }
+            else {
+                console.log("wrong username or password");
+
+                logout()
+                return false
+            }
+        })
+        return true;
+    }
+
+    // const login = async (username: string, password: string): Promise<boolean> => {
+
+    //     let data = await executeJwtAuthentication(username, password).then(async (res) => {
     //         console.log(res);
 
     //         if (res && res.status === 200) {
+    //             const jwtToken = 'Basic ' + res.data.token
     //             setAuthenticated(true)
-    //             setToken(baToken) //check if i need this
+    //             setToken(jwtToken)
     //             apiClient.interceptors.request.use((config) => {
     //                 console.log("dfsdd");
 
-    //                 config.headers.Authorization = baToken
+    //                 config.headers.Authorization = jwtToken
     //                 return config
     //             })
     //             await getUserDetails().then((res) => {
@@ -94,39 +127,7 @@ export default function AuthProvider({ children }: Props) {
     //     return true;
     // }
 
-    const login = async (username: string, password: string): Promise<boolean> => {
-
-        let data = await executeJwtAuthentication(username, password).then(async (res) => {
-            console.log(res);
-
-            if (res && res.status === 200) {
-                const jwtToken = 'Bearer ' + res.data.token
-                setAuthenticated(true)
-                setToken(jwtToken)
-                apiClient.interceptors.request.use((config) => {
-                    console.log("dfsdd");
-
-                    config.headers.Authorization = jwtToken
-                    return config
-                })
-                await getUserDetails().then((res) => {
-                    if (res && res.data) {
-                        console.log(res.data);
-                        setUserData(res.data);
-                        return true;
-                    }
-                })
-
-            }
-            else {
-                console.log("wrong username or password");
-
-                logout()
-                return false
-            }
-        })
-        return true;
-    }
+    
 
     const logout = () => {
         setAuthenticated(false)
