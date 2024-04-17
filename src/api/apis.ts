@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PayloadTaskData, TaskData } from "../Interfaces";
+import { PayloadTaskData, RegisterUserData, TaskData } from "../Interfaces";
 
 export const apiClient = axios.create({
   baseURL: "http://localhost:8080",
@@ -12,6 +12,18 @@ export const apiClient = axios.create({
 export const getUserDetails = () => {
   let data = apiClient
     .get("/user-details")
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return data;
+};
+
+export const registerUser = (payload: RegisterUserData) => {
+  let data = apiClient
+    .post("/register",payload)
     .then((res) => {
       return res;
     })

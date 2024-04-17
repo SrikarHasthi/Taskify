@@ -17,6 +17,12 @@ export interface UserData {
   todoHistory: allTasksHistory[],
 }
 
+export interface RegisterUserData {
+  name: string,
+  email: string,
+  password: string,
+}
+
 export interface PayloadTaskData {
   summary: string,
   description: string,

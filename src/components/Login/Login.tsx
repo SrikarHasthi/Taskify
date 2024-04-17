@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "./Login.scss"
@@ -32,87 +32,20 @@ import { useAuth } from "../../AuthContext";
 
 
 const Login = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('has@gmail.com');
     const [password, setPassword] = useState('');
     const authContext = useAuth();
 
     const usenavigate = useNavigate();
-    // const provider = new GoogleAuthProvider();
-    // const auth = getAuth();
 
-    // const logg = ()=>{
-    //     signInWithPopup(auth, provider).then((result) => {
-
-    //         // This gives you a Google Access Token. You can use it to access the Google API.
-    //         const credential = GoogleAuthProvider.credentialFromResult(result);
-    //         const token = credential.accessToken;
-    //         // The signed-in user info.
-    //         const user = result.user;
-    //         console.log("aaaa",user);
-    //         fetch("http://localhost:8000/user/").then((res) => {
-    //             return res.json();
-    //         }).then((resp) => {
-    //             console.log(resp)
-    //             const userPresent = resp.filter((e)=>{
-    //                     return e.username == user.displayName;
-    //             }).length>0;
-    //                 if (userPresent) {
-    //                     toast.success('Success');
-    //                     sessionStorage.setItem('username',resp.username);
-    //                     sessionStorage.setItem('userrole',resp.role);
-    //                     usenavigate('/')
-    //                 }else{
-    //                     let regobj = 
-    //                     {
-    //                         "id": user.displayName,
-    //                         "name": user.displayName,
-    //                         "password": "",
-    //                         "email": user.email,
-    //                         "phone": user.phoneNumber,
-    //                         "country": "",
-    //                         "address": "",
-    //                         "gender": "",
-    //                         "role": "candidate"
-    //                       };
-    //                     //console.log(regobj);
-    //                     fetch("http://localhost:8000/user", {
-    //                         method: "POST",
-    //                         headers: { 'content-type': 'application/json' },
-    //                         body: JSON.stringify(regobj)
-    //                     }).then((res) => {
-    //                         toast.success('Success');
-    //                         sessionStorage.setItem('username',user.displayName);
-    //                         sessionStorage.setItem('userrole',"candidate");
-    //                         usenavigate('/')
-    //                     }).catch((err) => {
-    //                         toast.error('Failed :' + err.message);
-    //                     });
-    //                 }
-    //         }).catch((err) => {
-    //             toast.error('Login Failed due to :' + err.message);
-    //         });
-    //         // IdP data available using getAdditionalUserInfo(result)
-    //         // ...
-    //       }).catch((error) => {
-    //         // Handle Errors here.
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         // The email of the user's account used.
-    //         const email = error.customData.email;
-    //         // The AuthCredential type that was used.
-    //         const credential = GoogleAuthProvider.credentialFromError(error);
-    //         // ...
-    //       });
-    // }
-    //     useEffect(()=>{
-    // sessionStorage.clear();
-    //     },[]);
-
+    useEffect(()=>{
+        localStorage.clear();
+    },[])
     const validate = () => {
         let result = true;
-        if (username === '' || username === null) {
+        if (email === '' || email === null) {
             result = false;
-            toast.warning('Please Enter Username');
+            toast.warning('Please Enter Email');
         }
         if (password === '' || password === null) {
             result = false;
@@ -121,23 +54,33 @@ const Login = () => {
         return result;
     }
 
-    const ProceedLogin = async () => {
+    const proceedLogin = async () => {
         // e.preventDefault();
         // retrieveTodos().then((res)=>{
         //     if(res && res.data)
         //     console.log(res.data);
         // })
-        if (validate() && await authContext.login(username, password)) {
-            toast.success('Success');
-            usenavigate("/home")
+        if (validate()) {
+            if (await authContext.login(email, password)) {
+                toast.success('Success');
+                usenavigate("/home")
+            }
+            else {
+                toast.error('Wrong Email or Password');
+            }
         }
         else {
             console.log("failed");
-
         }
     }
 
-    // const ProceedLoginusingAPI = () => {
+    function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+        if (e.key === 'Enter') {
+            proceedLogin();
+        }
+    }
+
+    // const proceedLoginusingAPI = () => {
     //     e.preventDefault();
     //     if (validate()) {
     //         ///implentation
@@ -188,16 +131,16 @@ const Login = () => {
                         </div>
                         <div className="card-body">
                             <div className="form-group">
-                                <label>User Name <span className="errmsg">*</span></label>
-                                <input value={username} onChange={e => setUsername(e.target.value)} className="form-control"></input>
+                                <label>Email <span className="errmsg">*</span></label>
+                                <input value={email} onChange={e => setEmail(e.target.value)} onKeyDown={(e) => { handleKeyDown(e) }} className="form-control"></input>
                             </div>
                             <div className="form-group">
                                 <label>Password <span className="errmsg">*</span></label>
-                                <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-control"></input>
+                                <input type="password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={(e) => { handleKeyDown(e) }} className="form-control"></input>
                             </div>
                         </div>
                         <div className="card-footer">
-                            <div onClick={ProceedLogin} className="btn btn-primary" style={{ marginRight: '15px' }}>Login</div>
+                            <div onClick={proceedLogin} className="btn btn-primary" style={{ marginRight: '15px' }}>Login</div>
                             <Link className="btn btn-success" to={'/register'}>New User</Link>
                             {/* <div style={{ marginLeft: '15%' }}> or </div>
                             <div onClick={logg} >

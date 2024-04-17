@@ -25,8 +25,6 @@ const Sidebar = ({ allTasksHistory }: Props) => {
 
 
     useEffect(() => {
-        console.log(allTasksHistory, "sdfsdf");
-        
         const filteredData = allTasksHistory && allTasksHistory.filter((e) => {
             return e.todos.length > 0;
         });
@@ -45,8 +43,6 @@ const Sidebar = ({ allTasksHistory }: Props) => {
     const handleLoad = () => {
         const tasks = savedTasks();
         dispatch(setTaskData(tasks))
-        console.log(allTasksHistory);
-
     }
 
 

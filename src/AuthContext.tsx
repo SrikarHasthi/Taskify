@@ -1,9 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
 import { apiClient, executeBasicAuthentication, executeJwtAuthentication, getUserDetails } from "./api/apis";
 import { UserData } from "./Interfaces";
 
 interface AuthContextType {
     isAuthenticated: boolean;
+    setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
     // login: (username: string, password: string) => Promise<boolean>; // Adjusted return type to Promise<boolean>
     login: (username: string, password: string) => Promise<boolean>; // Adjusted return type to Promise<boolean>
     logout: () => void;
@@ -20,6 +21,7 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>({
     isAuthenticated: false,
+    setIsAuthenticated: () => {},
     login: () => Promise.resolve(false), // Adjusted to return a Promise
     logout: () => { },
     token: null, // Adjusted to null instead of an empty string
@@ -35,7 +37,7 @@ interface Props {
 export default function AuthProvider({ children }: Props) {
 
     //3: Put some state in the context
-    const [isAuthenticated, setAuthenticated] = useState<boolean>(false)
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
     const [userData, setUserData] = useState<UserData>({ userId: 0, email: '', password: '', todoHistory: [] });
     const [token, setToken] = useState<string | null>(null) //check if i need this
 
@@ -46,11 +48,11 @@ export default function AuthProvider({ children }: Props) {
     //             setUserData(res.data);
 
     //             if (username === 'srikar' && password === 'dummy') {
-    //                 setAuthenticated(true);
+    //                 setIsAuthenticated(true);
     //                 return true;
     //             }
     //             else {
-    //                 setAuthenticated(false)
+    //                 setIsAuthenticated(false)
     //                 return false
     //             }
 
@@ -64,14 +66,12 @@ export default function AuthProvider({ children }: Props) {
         const baToken = 'Basic ' + window.btoa(username + ":" + password)
 
         let data = await executeBasicAuthentication(baToken).then(async (res) => {
-            console.log(res);
 
             if (res && res.status === 200) {
-                setAuthenticated(true)
+                setIsAuthenticated(true)
+                // sessionStorage.setItem('isAuthenticated', 'true')
                 setToken(baToken) //check if i need this
                 apiClient.interceptors.request.use((config) => {
-                    console.log("dfsdd");
-
                     config.headers.Authorization = baToken
                     return config
                 })
@@ -85,12 +85,11 @@ export default function AuthProvider({ children }: Props) {
             }
             else {
                 console.log("wrong username or password");
-
-                logout()
-                return false
+                return false;
             }
+            return true;
         })
-        return true;
+        return data;
     }
 
     // const login = async (username: string, password: string): Promise<boolean> => {
@@ -100,7 +99,7 @@ export default function AuthProvider({ children }: Props) {
 
     //         if (res && res.status === 200) {
     //             const jwtToken = 'Basic ' + res.data.token
-    //             setAuthenticated(true)
+    //             setIsAuthenticated(true)
     //             setToken(jwtToken)
     //             apiClient.interceptors.request.use((config) => {
     //                 console.log("dfsdd");
@@ -130,12 +129,12 @@ export default function AuthProvider({ children }: Props) {
     
 
     const logout = () => {
-        setAuthenticated(false)
+        setIsAuthenticated(false)
         setToken(null)
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, token, userData }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, login, logout, token, userData }}>
             {children}
         </AuthContext.Provider>
     )

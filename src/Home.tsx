@@ -34,7 +34,6 @@ const Home: React.FC = () => {
         retrieveTodayTodohistory(userDetails.userId).then((res) => {
             if (res && res.data) {
                 dispatch(setTaskData(res.data.todos))
-                console.log("today", res.data);
             }
         })
     }, [])

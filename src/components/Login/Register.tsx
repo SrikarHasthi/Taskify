@@ -1,32 +1,21 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { registerUser } from "../../api/apis";
+import { RegisterUserData } from "../../Interfaces";
 
 const Register = () => {
 
-    const [id, idchange] = useState("");
-    const [role, changeRoleType] = useState("");
-    const [name, namechange] = useState("");
-    const [password, passwordchange] = useState("");
-    const [email, emailchange] = useState("");
-    const [phone, phonechange] = useState("");
-    const [country, countrychange] = useState("canada");
-    const [address, addresschange] = useState("");
-    const [gender, genderchange] = useState("male");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
 
     const navigate = useNavigate();
 
     const IsValidate = () => {
         let isproceed = true;
         let errormessage = 'Please enter the value in ';
-        if (role === null || role === '') {
-            isproceed = false;
-            errormessage += ' Role';
-        }
-        if (id === null || id === '') {
-            isproceed = false;
-            errormessage += ' Username';
-        }
         if (name === null || name === '') {
             isproceed = false;
             errormessage += ' Fullname';
@@ -40,12 +29,12 @@ const Register = () => {
             errormessage += ' Email';
         }
 
-        if(!isproceed){
+        if (!isproceed) {
             toast.warning(errormessage)
-        }else{
-            if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)){
+        } else {
+            if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
 
-            }else{
+            } else {
                 isproceed = false;
                 toast.warning('Please enter the valid email')
             }
@@ -55,26 +44,24 @@ const Register = () => {
 
 
     const handlesubmit = (e: FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            let regobj = { id, name, password, email, phone, country, address, gender, role };
-            if (IsValidate()) {
-            //console.log(regobj);
-            fetch("http://localhost:8000/user", {
-                method: "POST",
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(regobj)
-            }).then((res) => {
-                toast.success('Registered successfully.')
-                navigate('/login');
+        e.preventDefault();
+        if (IsValidate()) {
+            const payload: RegisterUserData = { name, password, email }
+            registerUser(payload).then((res) => {
+                console.log(res && res.data);
+                toast.success('Registered successfully. Redirecting To Login..')
+                setTimeout(() => {
+                    navigate('/login')
+                }, 3000)
             }).catch((err) => {
                 toast.error('Failed :' + err.message);
-            });
+            })
         }
     }
     return (
         <div>
             <div className="offset-lg-3 col-lg-6">
-                <form className="container" onSubmit={e => handlesubmit(e)}>
+                <form className="container" onSubmit={(e) => { handlesubmit(e) }}>
                     <div className="card">
                         <div className="card-header">
                             <h1>User Registeration</h1>
@@ -82,85 +69,38 @@ const Register = () => {
                         <div className="card-body">
 
                             <div className="row">
-                            <div className="col-lg-12">
-                                    <div className="form-group">
-                                        <label htmlFor="role">Role<span className="errmsg">*</span></label>
-                                            <select name="role" id="role" onChange={e => changeRoleType(e.target.value)} className="form-control-dropdown form-control">
-                                            <option value="">Select..</option>
-                                            <option value="employer">Employer</option>
-                                            <option value="candidate">Candidate</option>
-                                            </select>
-                                    </div>
-                                </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>User Name <span className="errmsg">*</span></label>
-                                        <input value={id} onChange={e => idchange(e.target.value)} className="form-control"></input>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>Password <span className="errmsg">*</span></label>
-                                        <input value={password} onChange={e => passwordchange(e.target.value)} type="password" className="form-control"></input>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>Full Name <span className="errmsg">*</span></label>
-                                        <input value={name} onChange={e => namechange(e.target.value)} className="form-control"></input>
+                                        <input value={name} onChange={e => setName(e.target.value)} className="form-control"></input>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
                                         <label>Email <span className="errmsg">*</span></label>
-                                        <input value={email} onChange={e => emailchange(e.target.value)} className="form-control"></input>
+                                        <input value={email} onChange={e => setEmail(e.target.value)} className="form-control"></input>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
-                                        <label>Phone <span className="errmsg"></span></label>
-                                        <input value={phone} onChange={e => phonechange(e.target.value)} className="form-control"></input>
+                                        <label>Password <span className="errmsg">*</span></label>
+                                        <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="form-control"></input>
                                     </div>
                                 </div>
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>Country <span className="errmsg">*</span></label>
-                                        <select value={country} onChange={e => countrychange(e.target.value)} className="form-control form-control-dropdown">
-                                            <option value="india">India</option>
-                                            <option value="usa">USA</option>
-                                            <option value="canada">Canada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="col-lg-12">
-                                    <div className="form-group">
-                                        <label>Address</label>
-                                        <textarea value={address} onChange={e => addresschange(e.target.value)} className="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>Gender</label>
-                                        <br></br>
-                                        <input type="radio" checked={gender === 'male'} onChange={e => genderchange(e.target.value)} name="gender" value="male" className="app-check"></input>
-                                        <label>Male</label>
-                                        <input type="radio" checked={gender === 'female'} onChange={e => genderchange(e.target.value)} name="gender" value="female" className="app-check"></input>
-                                        <label>Female</label>
-                                    </div>
-                                </div>
-
                             </div>
 
                         </div>
                         <div className="card-footer">
                             <button type="submit" className="btn btn-primary">Register</button> |
-                            <Link to={'/login'} className="btn btn-danger">Close</Link>
+                            <Link to={'/login'} className="btn btn-danger">Login</Link>
                         </div>
                     </div>
                 </form>
             </div>
-
-
+            <ToastContainer
+                position="bottom-right"
+                hideProgressBar={true}
+            />
         </div>
     );
 }

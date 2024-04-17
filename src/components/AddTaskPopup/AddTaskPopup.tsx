@@ -59,7 +59,6 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
             updateTodos(taskData[0].id, userDetails.userId, updatedTask).then((res) => {
                 if (res && res.data) {
                     updatedTask = res.data;
-                    console.log("updated", res.data);
                 }
             })
             const updatedTaskData = allTaskData.map((e) => {
@@ -82,7 +81,6 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
             };
             createTodo(task, userDetails.userId).then((res) => {
                 if (res && res.data) {
-                    console.log(res.data);
                     const newtask: TaskData = { ...task, id: res.data.id };
                     dispatch(setTaskData([...allTaskData, newtask]))
 
@@ -96,7 +94,7 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
 
         deleteTodo(id).then((res) => {
             if (res && res.data) {
-                console.log(res.data);
+
             }
         })
         const updatedTaskData = allTaskData.filter((e) => {
