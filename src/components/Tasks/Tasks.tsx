@@ -14,38 +14,42 @@ import { setTaskData } from "../../redux/reducers/taskDataReducer";
 import CountdownTimer from "../CountdownTimer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { updateTodos } from "../../api/apis";
+import { useAuth } from "../../AuthContext";
 
 interface Props {
     status: string[]
 }
 
-const Tasks = ({status}: Props) => {
+const Tasks = ({ status }: Props) => {
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
     const [selectedTaskId, setSelectedTaskId] = useState<number>()
+    const authContext = useAuth()
+    const userDetails = authContext.userData
     const dispatch = useDispatch()
-    const handleStatus = (task: TaskData, status:string, e:React.MouseEvent<HTMLImageElement, MouseEvent>):void => {
+    const handleStatus = (task: TaskData, status: string, e: React.MouseEvent<HTMLImageElement, MouseEvent>): void => {
         e.stopPropagation()
         setSelectedTaskId(task.id)
         let newStatus = ""
         let localStorageTime = task.time
-        if(status === "done"){
+        if (status === "done") {
             localStorage.removeItem(`${task.id}`)
             newStatus = "done"
         }
         else {
-            if(task.status === "new" || task.status === "paused"){
+            if (task.status === "new" || task.status === "paused") {
                 localStorage.setItem(`${task.id}`, `${task.time}`)
                 newStatus = "inProgress"
             }
-            if(task.status === "inProgress"){
+            if (task.status === "inProgress") {
                 localStorageTime = getLocalStorageTime(task.id)
                 newStatus = "paused"
             }
             // newStatus = task.status === "new" || task.status === "paused" ? "inProgress" : "paused";
         }
-        const newTaskData:TaskData[] = allTaskData.map((e)=>{
-            if(e.id === task.id) {
+        const newTaskData: TaskData[] = allTaskData.map((e) => {
+            if (e.id === task.id) {
                 return {
                     ...e,
                     time: localStorageTime,
@@ -54,10 +58,22 @@ const Tasks = ({status}: Props) => {
             }
             return e
         })
+
+        let updatedTask = newTaskData.find((e) => e.id === task.id);
+
+        console.log(updatedTask, newStatus, localStorageTime);
+        if (updatedTask) {
+            updateTodos(updatedTask.id, userDetails.userId, updatedTask).then((res) => {
+                if (res && res.data) {
+                    updatedTask = res.data;
+                }
+            })
+        }
+
         dispatch(setTaskData(newTaskData))
     }
     const getLocalStorageTime = (id: number): number => {
-        const storedValue = localStorage.getItem(`${id}`); 
+        const storedValue = localStorage.getItem(`${id}`);
         return storedValue !== null ? parseInt(storedValue) : 0;
     };
 
@@ -74,70 +90,71 @@ const Tasks = ({status}: Props) => {
             }
             return e;
         });
-        
+
         if (task !== null) {
             new Notification(`Task ${(task as TaskData).summary} is completed`)
         }
         localStorage.removeItem(`${id}`)
         dispatch(setTaskData(newTaskData))
     }
-      
+
     return (
         <div className="tasks-main-container">
 
-            {allTaskData.filter((e)=> status.includes(e.status)).map((task, id)=>{
+            {allTaskData.filter((e) => status.includes(e.status)).map((task, id) => {
                 return (
-                    <div className="tasks-section-container" key={id} onClick={()=> {
+                    <div className="tasks-section-container" key={id} onClick={() => {
                         setSelectedTaskId(task.id);
                         setAddTaskPopup(true)
                     }}>
-                      {selectedTaskId === task.id ? <Modal
+                        {selectedTaskId === task.id ? <Modal
                             isOpen={addTaskPopup}
                             style={{
                                 ...customStyles,
-                                content:{
-                                ...customStyles.content,
-                                width: "41rem",
-                                height: "28rem",
-                            }}}
+                                content: {
+                                    ...customStyles.content,
+                                    width: "41rem",
+                                    height: "28rem",
+                                }
+                            }}
                             shouldCloseOnOverlayClick={true}
                             onRequestClose={(e) => {
                                 e.stopPropagation()
                                 setAddTaskPopup(false);
                             }}
-                            >
-                                <AddTaskPopup setAddTaskPopup={setAddTaskPopup} taskData={[task]}/>
+                        >
+                            <AddTaskPopup setAddTaskPopup={setAddTaskPopup} taskData={[task]} />
                         </Modal> : ""}
-                    <div className="tasks-section-summary">
-                        {task.summary}
-                    </div>
-                    <div className="task-section-bottom">
-                        <div className="task-section-bottom-time-conatiner">
-                            
-                            <div className="task-section-bottom-time">
+                        <div className="tasks-section-summary">
+                            {task.summary}
+                        </div>
+                        <div className="task-section-bottom">
+                            <div className="task-section-bottom-time-conatiner">
+
+                                <div className="task-section-bottom-time">
+                                    {
+                                        (task.status === "inProgress") ? <CountdownTimer targetTime={new Date().getTime() + getLocalStorageTime(task.id)} taskId={task.id} checkTimeForDone={checkTimeForDone} />
+                                            : convertTime(task.time).toDisplayTime()
+                                    }
+                                </div>
+
                                 {
-                                    (task.status === "inProgress") ? <CountdownTimer targetTime={new Date().getTime() + getLocalStorageTime(task.id)} taskId={task.id} checkTimeForDone={checkTimeForDone}/>
-                                    : convertTime(task.time).toDisplayTime()
+                                    task.status !== "done" ?
+                                        <img className="task-section-bottom-icon" src={(task.status === "new" || task.status === "paused") ? play : pause} onClick={(e) => handleStatus(task, "notDone", e)} alt="play/pause icon" />
+                                        : ""
+                                }
+                                {
+                                    (task.status === "inProgress" || task.status === "paused") ?
+                                        <img className="task-section-bottom-icon" src={stop} onClick={(e) => handleStatus(task, "done", e)} alt="stop icon" />
+                                        : ""
                                 }
                             </div>
-                            
-                            {
-                                task.status !== "done" ?
-                                <img className="task-section-bottom-icon" src={(task.status === "new" || task.status === "paused") ? play : pause} onClick={(e)=> handleStatus(task, "notDone", e)} alt="play/pause icon"/>
-                                : ""
-                            }
-                            {
-                                (task.status === "inProgress" || task.status === "paused") ? 
-                                <img className="task-section-bottom-icon" src={stop} onClick={(e)=> handleStatus(task, "done", e)} alt="stop icon"/> 
-                                : "" 
-                            }
+                            <img className="task-section-bottom-priority" src={givePriorityImage(task.priority)} alt="priority icon" />
                         </div>
-                        <img className="task-section-bottom-priority" src={givePriorityImage(task.priority)} alt="priority icon"/>
                     </div>
-                </div>
                 )
             })}
-            <ToastContainer 
+            <ToastContainer
                 position="bottom-right"
                 hideProgressBar={true}
             />
