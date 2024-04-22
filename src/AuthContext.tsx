@@ -25,7 +25,7 @@ export const AuthContext = createContext<AuthContextType>({
     login: () => Promise.resolve(false), // Adjusted to return a Promise
     logout: () => { },
     token: null, // Adjusted to null instead of an empty string
-    userData: { userId: 0, email: '', password: '', todoHistory: [] },
+    userData: { userId: 0, email: '', password: '', todoHistory: [], name: '' },
 });
 
 export const useAuth = () => useContext(AuthContext)
@@ -38,7 +38,7 @@ export default function AuthProvider({ children }: Props) {
 
     //3: Put some state in the context
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-    const [userData, setUserData] = useState<UserData>({ userId: 0, email: '', password: '', todoHistory: [] });
+    const [userData, setUserData] = useState<UserData>({ userId: 0, email: '', password: '', todoHistory: [], name: '' });
     const [token, setToken] = useState<string | null>(null) //check if i need this
 
     // const login = async (username: string, password: string): Promise<boolean> => {

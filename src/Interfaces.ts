@@ -12,6 +12,7 @@ export interface priorityInterface {
 
 export interface UserData {
   userId: number,
+  name: string,
   email: string,
   password: string,
   todoHistory: allTasksHistory[],

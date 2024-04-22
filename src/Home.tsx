@@ -14,7 +14,7 @@ import { useAuth } from "./AuthContext";
 
 import empty from './assets/empty.png';
 import { allTasksHistory } from "./Interfaces";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const Home: React.FC = () => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
@@ -24,6 +24,12 @@ const Home: React.FC = () => {
     const allTaskData = useSelector((state: RootState) => state.taskData)
     const authContext = useAuth();
     const userDetails = authContext.userData;
+
+    useEffect(() => {
+        toast.success(`Welcome back ${userDetails.name}`, {
+            toastId: 'success1',
+        });
+    }, [userDetails])
 
     useEffect(() => {
         retrieveAllTodohistory(userDetails.userId).then((res) => {

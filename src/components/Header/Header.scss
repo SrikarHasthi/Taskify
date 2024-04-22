@@ -6,6 +6,16 @@
     justify-content: center;
 }
 
+.main-header-logo-image {
+    width: 2.1rem;
+    margin-top: 0.3rem;
+    margin-right: 0.5rem;
+
+    img {
+        width: 100%;
+    }
+}
+
 .main-header-app-name{
     text-align: center;
     font-size: 2rem;

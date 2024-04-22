@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import './App.css';
 import Home from './Home';
 import Login from './components/Login/Login';

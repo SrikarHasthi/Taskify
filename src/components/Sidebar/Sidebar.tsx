@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setTaskData } from "../../redux/reducers/taskDataReducer";
-import { savedTasks } from "../../StaticData";
 import comingSoon from "../../assets/coming-soon.svg";
 import question from "../../assets/question-circle-svgrepo-com.svg";
 import "./Sidebar.scss"
@@ -13,11 +10,9 @@ import sideArrow from '../../assets/side-arrow-svgrepo-com.svg';
 
 interface Props {
     allTasksHistory: allTasksHistory[] | null,
-
 }
 
 const Sidebar = ({ allTasksHistory }: Props) => {
-    const dispatch = useDispatch()
     const [filteredAllTasksHistory, setFilteredAllTaskHistory] = useState<allTasksHistory[] | null>(null)
     const [openTaskHistoryIds, setOpenTaskHistoryIds] = useState<
         Record<number, boolean>
@@ -39,18 +34,9 @@ const Sidebar = ({ allTasksHistory }: Props) => {
         }));
     };
 
-
-    const handleLoad = () => {
-        const tasks = savedTasks();
-        dispatch(setTaskData(tasks))
-    }
-
-
-
     return (
         <>
             <div className="main-sidebar-container">
-                {/* <div className="sidebar-load-tasks-section" onClick={() => handleLoad()}></div> */}
                 <div className="sidebar-tasks-history-container">
                     <div className="sidebar-tasks-history-title">
                         Tasks History

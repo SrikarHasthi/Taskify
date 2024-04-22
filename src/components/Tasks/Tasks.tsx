@@ -12,7 +12,7 @@ import { customStyles } from "../../StaticData";
 import AddTaskPopup from "../AddTaskPopup/AddTaskPopup";
 import { setTaskData } from "../../redux/reducers/taskDataReducer";
 import CountdownTimer from "../CountdownTimer";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { updateTodos } from "../../api/apis";
 import { useAuth } from "../../AuthContext";

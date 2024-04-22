@@ -1,24 +1,29 @@
-import { FormEvent, useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from "../../assets/logo2.png";
+import signInBg from "../../assets/signinbg.svg";
+import "./Login.scss"
 import { registerUser } from "../../api/apis";
 import { RegisterUserData } from "../../Interfaces";
+import CustomLoader from "../CustomLoader";
 
 const Register = () => {
 
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const IsValidate = () => {
+    const isValidate = () => {
         let isproceed = true;
-        let errormessage = 'Please enter the value in ';
+        let errormessage = 'Please Enter ';
         if (name === null || name === '') {
             isproceed = false;
-            errormessage += ' Fullname';
+            errormessage += ' Username';
         }
         if (password === null || password === '') {
             isproceed = false;
@@ -42,60 +47,70 @@ const Register = () => {
         return isproceed;
     }
 
+    function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+        if (e.key === 'Enter') {
+            handlesubmit();
+        }
+    }
 
-    const handlesubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (IsValidate()) {
+
+    const handlesubmit = () => {
+        if (isValidate()) {
+            setIsLoading(true);
             const payload: RegisterUserData = { name, password, email }
             registerUser(payload).then((res) => {
                 console.log(res && res.data);
                 toast.success('Registered successfully. Redirecting To Login..')
                 setTimeout(() => {
                     navigate('/login')
+                    setIsLoading(false);
                 }, 3000)
             }).catch((err) => {
+                setIsLoading(false);
                 toast.error('Failed :' + err.message);
             })
         }
     }
     return (
-        <div>
-            <div className="offset-lg-3 col-lg-6">
-                <form className="container" onSubmit={(e) => { handlesubmit(e) }}>
-                    <div className="card">
-                        <div className="card-header">
-                            <h1>User Registeration</h1>
+        <div className="login-page-container">
+            <div className="login-main-container">
+                <div className="login-main-body-container">
+                    <div className="login-logo-container">
+                        <div className="login-logo-image">
+                            <img src={logo} alt="logo" />
                         </div>
-                        <div className="card-body">
-
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>User Name <span className="errmsg">*</span></label>
-                                        <input value={name} onChange={e => setName(e.target.value)} className="form-control"></input>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>Email <span className="errmsg">*</span></label>
-                                        <input value={email} onChange={e => setEmail(e.target.value)} className="form-control"></input>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="form-group">
-                                        <label>Password <span className="errmsg">*</span></label>
-                                        <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="form-control"></input>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div className="login-logo-name">Taskify</div>
+                    </div>
+                    <div className="login-signin-container">
+                        <h2>Sign Up</h2>
+                    </div>
+                    <div className="login-body-container">
+                        <div className="login-input-container">
+                            <label>Username</label>
+                            <input value={name} onChange={e => setName(e.target.value)} onKeyDown={(e) => { handleKeyDown(e) }} className="login-input" maxLength={20}></input>
                         </div>
-                        <div className="card-footer">
-                            <button type="submit" className="btn btn-primary">Register</button> |
-                            <Link to={'/login'} className="btn btn-danger">Login</Link>
+                        <div className="login-input-container">
+                            <label>Email</label>
+                            <input value={email} onChange={e => setEmail(e.target.value)} onKeyDown={(e) => { handleKeyDown(e) }} className="login-input" maxLength={30}></input>
+                        </div>
+                        <div className="login-input-container">
+                            <label>Password</label>
+                            <input type="password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={(e) => { handleKeyDown(e) }} className="login-input" maxLength={20}></input>
                         </div>
                     </div>
-                </form>
+                    <div className="login-footer-container">
+                        <div onClick={handlesubmit} className="login-button">
+                            {!isLoading ?
+                                "Create"
+                                : <CustomLoader />
+                            }
+                        </div>
+                        <Link to={'/login'} className="sign-back-in"><span>&#8592;</span>Back to Login</Link>
+                    </div>
+                </div>
+            </div>
+            <div className="login-bg-image">
+                <img src={signInBg} alt="bg" />
             </div>
             <ToastContainer
                 position="bottom-right"

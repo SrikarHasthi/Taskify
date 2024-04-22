@@ -133,7 +133,7 @@ const AddTaskPopup = ({ setAddTaskPopup, taskData }: Props) => {
                     </div> : ""}
                 </div>
                 <div className="task-popup-heading">Set Time</div>
-                <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder="4h 30m" value={time} onChange={(e) => { setTime(e.target.value) }} />
+                <input className="task-popup-addTask-input task-popup-addTask-time-input" placeholder=" 4h 30m" value={time} onChange={(e) => { setTime(e.target.value) }} />
                 <button className="task-popup-createTask-button" onClick={(e) => { e.stopPropagation(); handleSubmit() }}>{(taskData && taskData[0]) ? "Done" : "Create"}</button>
                 {
                     (taskData && taskData[0]) ? <button className="task-popup-createTask-button" onClick={(e) => { e.stopPropagation(); handleDelete(taskData[0].id) }}>Delete</button>

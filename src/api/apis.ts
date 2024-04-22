@@ -2,7 +2,7 @@ import axios from "axios";
 import { PayloadTaskData, RegisterUserData, TaskData } from "../Interfaces";
 
 export const apiClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://taskifyv3-env.eba-zua2a2hn.us-east-2.elasticbeanstalk.com/",
   headers: {
     accept: 'application/json',
     "Content-Type": 'application/json'
