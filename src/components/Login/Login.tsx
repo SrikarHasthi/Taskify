@@ -39,7 +39,7 @@ const Login = () => {
             if (await authContext.login(email, password)) {
                 setIsLoading(false);
                 toast.success('Success');
-                usenavigate("/home");
+                usenavigate("/taskify/home");
             }
             else {
                 toast.error('Wrong Email or Password');
@@ -87,7 +87,7 @@ const Login = () => {
                                 : <CustomLoader />
                             }
                         </div>
-                        <div className="sign-up">Don't have an account?<Link to={'/register'}><span>Create Now</span></Link></div>
+                        <div className="sign-up">Don't have an account?<Link to={'/taskify/register'}><span>Create Now</span></Link></div>
                     </div>
                 </div>
             </div>

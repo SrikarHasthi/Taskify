@@ -25,7 +25,7 @@ const App: React.FC = () => {
     if (authContext.isAuthenticated)
       return children
     else
-      return <Navigate to="/login" />
+      return <Navigate to="/taskify/login" />
 
 
   }
@@ -34,10 +34,10 @@ const App: React.FC = () => {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Navigate to="/login" />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/register' element={<Register />}></Route>
-            <Route path='/home' element={
+            <Route path='/taskify/' element={<Navigate to="/taskify/login" />}></Route>
+            <Route path='/taskify/login' element={<Login />}></Route>
+            <Route path='/taskify/register' element={<Register />}></Route>
+            <Route path='/taskify/home' element={
               <AuthenticatedRoute>
                 <Home />
               </AuthenticatedRoute>
