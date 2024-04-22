@@ -62,7 +62,7 @@ const Register = () => {
                 console.log(res && res.data);
                 toast.success('Registered successfully. Redirecting To Login..')
                 setTimeout(() => {
-                    navigate('/login')
+                    navigate('/taskify/login')
                     setIsLoading(false);
                 }, 3000)
             }).catch((err) => {
@@ -105,7 +105,7 @@ const Register = () => {
                                 : <CustomLoader />
                             }
                         </div>
-                        <Link to={'/login'} className="sign-back-in"><span>&#8592;</span>Back to Login</Link>
+                        <Link to={'/taskify/login'} className="sign-back-in"><span>&#8592;</span>Back to Login</Link>
                     </div>
                 </div>
             </div>
