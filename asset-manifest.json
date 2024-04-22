@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/taskify/login/static/css/main.9fd11d65.css",
-    "main.js": "/taskify/login/static/js/main.9cc39e4c.js",
-    "static/media/logo2.png": "/taskify/login/static/media/logo2.55ea7acd8d3b8f0a01a9.png",
-    "static/media/empty.png": "/taskify/login/static/media/empty.b78a06f517958688a3b4.png",
-    "static/media/coming-soon.svg": "/taskify/login/static/media/coming-soon.efeb73f26436b843d465d36fb78f7c96.svg",
-    "static/media/question-circle-svgrepo-com.svg": "/taskify/login/static/media/question-circle-svgrepo-com.904f5526adcadefd5a9f6b027abbe585.svg",
-    "static/media/side-arrow-svgrepo-com.svg": "/taskify/login/static/media/side-arrow-svgrepo-com.13e1a10242849a6ab8208e9cafa44010.svg",
-    "static/media/down-arrow-svgrepo-com.svg": "/taskify/login/static/media/down-arrow-svgrepo-com.7c335ff7ee5c70ad646242c548fe2672.svg",
-    "static/media/close-icon.svg": "/taskify/login/static/media/close-icon.0c9d5b78c9b9472a3b0640d9ed83b73d.svg",
-    "static/media/pause.svg": "/taskify/login/static/media/pause.70629f7dc8bb3ca284cd2588cee353a0.svg",
-    "index.html": "/taskify/login/index.html",
-    "static/media/signinbg.svg": "/taskify/login/static/media/signinbg.45d3526d0dcab9cdd4c9ad2a7ee964be.svg",
-    "static/media/dropdown-arrow-svgrepo-com.svg": "/taskify/login/static/media/dropdown-arrow-svgrepo-com.ab52c97c10b42dc6ad544ee3f433baf1.svg",
-    "static/media/stop.svg": "/taskify/login/static/media/stop.3fbcd2c86283787c39137b80b7d2e16e.svg",
-    "static/media/play.svg": "/taskify/login/static/media/play.e3d19f892707c62514742f095879e470.svg",
-    "main.9fd11d65.css.map": "/taskify/login/static/css/main.9fd11d65.css.map",
-    "main.9cc39e4c.js.map": "/taskify/login/static/js/main.9cc39e4c.js.map"
+    "main.css": "/taskify/static/css/main.9fd11d65.css",
+    "main.js": "/taskify/static/js/main.5816c3a8.js",
+    "static/media/logo2.png": "/taskify/static/media/logo2.55ea7acd8d3b8f0a01a9.png",
+    "static/media/empty.png": "/taskify/static/media/empty.b78a06f517958688a3b4.png",
+    "static/media/coming-soon.svg": "/taskify/static/media/coming-soon.efeb73f26436b843d465d36fb78f7c96.svg",
+    "static/media/question-circle-svgrepo-com.svg": "/taskify/static/media/question-circle-svgrepo-com.904f5526adcadefd5a9f6b027abbe585.svg",
+    "static/media/side-arrow-svgrepo-com.svg": "/taskify/static/media/side-arrow-svgrepo-com.13e1a10242849a6ab8208e9cafa44010.svg",
+    "static/media/down-arrow-svgrepo-com.svg": "/taskify/static/media/down-arrow-svgrepo-com.7c335ff7ee5c70ad646242c548fe2672.svg",
+    "static/media/close-icon.svg": "/taskify/static/media/close-icon.0c9d5b78c9b9472a3b0640d9ed83b73d.svg",
+    "static/media/pause.svg": "/taskify/static/media/pause.70629f7dc8bb3ca284cd2588cee353a0.svg",
+    "index.html": "/taskify/index.html",
+    "static/media/signinbg.svg": "/taskify/static/media/signinbg.45d3526d0dcab9cdd4c9ad2a7ee964be.svg",
+    "static/media/dropdown-arrow-svgrepo-com.svg": "/taskify/static/media/dropdown-arrow-svgrepo-com.ab52c97c10b42dc6ad544ee3f433baf1.svg",
+    "static/media/stop.svg": "/taskify/static/media/stop.3fbcd2c86283787c39137b80b7d2e16e.svg",
+    "static/media/play.svg": "/taskify/static/media/play.e3d19f892707c62514742f095879e470.svg",
+    "main.9fd11d65.css.map": "/taskify/static/css/main.9fd11d65.css.map",
+    "main.5816c3a8.js.map": "/taskify/static/js/main.5816c3a8.js.map"
   },
   "entrypoints": [
     "static/css/main.9fd11d65.css",
-    "static/js/main.9cc39e4c.js"
+    "static/js/main.5816c3a8.js"
   ]
 }
