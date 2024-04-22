@@ -74,8 +74,6 @@ export const validateTime = (time: string): boolean => {
   }
   const matchResult = time.match(regex);
   if (matchResult) {
-    console.log(matchResult);
-    
     const [_, hours, minutes] = matchResult;
 
     if (!hours && !minutes) {

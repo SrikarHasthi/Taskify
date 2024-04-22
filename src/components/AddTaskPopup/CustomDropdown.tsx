@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import "../components/CustomDropdown.scss"
-import { priorityImages } from "../StaticData";
-import { capitalizeFirstLetter } from "../Utils";
-import { priorityInterface } from "../Interfaces";
+import "./CustomDropdown.scss"
+import { priorityImages } from "../../StaticData";
+import { capitalizeFirstLetter } from "../../Utils";
+import { priorityInterface } from "../../Interfaces";
 
 interface Props {
     changeDropdown: (data: priorityInterface) => void,

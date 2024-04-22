@@ -10,17 +10,41 @@ export interface priorityInterface {
   imgSrc: string,
 }
 
-export interface TaskData {
-  id: number,
+export interface UserData {
+  userId: number,
+  name: string,
+  email: string,
+  password: string,
+  todoHistory: allTasksHistory[],
+}
+
+export interface RegisterUserData {
+  name: string,
+  email: string,
+  password: string,
+}
+
+export interface PayloadTaskData {
   summary: string,
   description: string,
   priority: string,
   time: number,
+  dateCreated: string,
   status: string,
+}
+
+export interface TaskData extends PayloadTaskData {
+  id: number,
 }
 
 export interface TimeConverter {
   toDisplayTime(): string,
   toAlphaNumericTime(): string,
   toMs(): number,
+}
+
+export interface allTasksHistory {
+  todoHistoryId: number,
+  dateCreated: string,
+  todos: TaskData[],
 }

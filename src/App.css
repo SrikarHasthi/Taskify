@@ -46,6 +46,7 @@ hr {
 }
 
 .home-main-add-task-button{
+    box-sizing: content-box;
     width: 4rem;
     opacity: 1;
     transition: opacity 0.3s ease 0s;
@@ -95,6 +96,24 @@ hr {
   color: #828284;
   margin-top: 5rem;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  opacity: 1;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  outline: 0px solid #e2e3e8;
+  border-radius: 10px;
+}
+
 
 @media (max-width: 960px) {
   .main-sidebar-show-container {

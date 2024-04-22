@@ -43,13 +43,13 @@ export const priorityImages =
     value: "high",
     imgSrc: "https://srikarhasthi.atlassian.net/images/icons/priorities/high.svg",
   },
-  
 ]
 
 export const savedTasks = ():TaskData[] => {
  return [
     {
-      id: Date.now(),
+      id: 12111,
+      dateCreated: Date.now().toString(),
       summary: "Learn Backend",
       description: "",
       priority: "medium",
@@ -57,7 +57,8 @@ export const savedTasks = ():TaskData[] => {
       status: "new",
     },
     {
-      id: Date.now()+100,
+      id: 12112,
+      dateCreated: (Date.now()+100).toString(),
       summary: "Leetcode",
       description: "",
       priority: "medium",
