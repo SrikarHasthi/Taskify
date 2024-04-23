@@ -1,6 +1,6 @@
 # Live Demo
 
-Checkout the deployed app by clicking [this link](http://taskify-react.s3-website.us-east-2.amazonaws.com/)
+Checkout the deployed app by clicking [this link](http://taskify-react.s3-website.us-east-2.amazonaws.com/).
 
 # Getting Started with Create React App
 
