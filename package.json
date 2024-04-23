@@ -1,7 +1,6 @@
 {
   "name": "taskify",
   "version": "0.1.0",
-  "homepage": "https://srikarhasthi.github.io/taskify",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
