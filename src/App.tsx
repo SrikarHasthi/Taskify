@@ -8,19 +8,12 @@ import Register from './components/Login/Register';
 
 interface Props {
   children?: ReactNode
-  // any props that come into the component
 }
 
 const App: React.FC = () => {
 
   const AuthenticatedRoute = ({ children }: Props) => {
     const authContext = useAuth()
-
-    // useEffect(() => {
-    //   const sessionData = sessionStorage.getItem('isAuthenticated');
-    //   const bool = sessionData === 'true' ? true : false;
-    //   authContext.setIsAuthenticated(bool);
-    // }, [authContext]);
 
     if (authContext.isAuthenticated)
       return children

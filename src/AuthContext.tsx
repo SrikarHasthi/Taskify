@@ -1,6 +1,7 @@
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { apiClient, executeBasicAuthentication, executeJwtAuthentication, getUserDetails } from "./api/apis";
 import { UserData } from "./Interfaces";
+import { cookies } from "./Utils";
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -33,13 +34,14 @@ interface Props {
     children?: ReactNode
     // any props that come into the component
 }
-//2: Share the created context with other components
+
 export default function AuthProvider({ children }: Props) {
 
-    //3: Put some state in the context
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+    const oneDay = 24 * 60 * 60 * 1000;
+    const expirationDate = new Date(Date.now() + oneDay);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(cookies.get("basic_auth")? true : false);
     const [userData, setUserData] = useState<UserData>({ userId: 0, email: '', password: '', todoHistory: [], name: '' });
-    const [token, setToken] = useState<string | null>(null) //check if i need this
+    const [token, setToken] = useState<string | null>(cookies.get("basic_auth")? cookies.get("basic_auth") : null) //check if i need this
 
     // const login = async (username: string, password: string): Promise<boolean> => {
     //     let data = await getUserDetails().then((res) => {
@@ -62,12 +64,28 @@ export default function AuthProvider({ children }: Props) {
     //     return data;
     // }
 
+    useEffect(()=> {
+        if(isAuthenticated){
+            apiClient.interceptors.request.use((config) => {
+                config.headers.Authorization = token
+                return config
+            })
+            getUserDetails().then((res2) => {
+                if (res2 && res2.data) {
+                    setUserData(res2.data);
+                    return true;
+                }
+            })
+        }
+      },[])
+
     const login = async (username: string, password: string): Promise<boolean> => {
         const baToken = 'Basic ' + window.btoa(username + ":" + password)
 
         let data = await executeBasicAuthentication(baToken).then(async (res) => {
 
             if (res && res.status === 200) {
+                cookies.set("basic_auth", baToken, { expires: expirationDate })
                 setIsAuthenticated(true)
                 // sessionStorage.setItem('isAuthenticated', 'true')
                 setToken(baToken) //check if i need this
@@ -129,8 +147,9 @@ export default function AuthProvider({ children }: Props) {
     
 
     const logout = () => {
-        setIsAuthenticated(false)
-        setToken(null)
+        cookies.remove("basic_auth");
+        setIsAuthenticated(false);
+        setToken(null);
     }
 
     return (

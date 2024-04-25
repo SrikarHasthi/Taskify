@@ -1,5 +1,8 @@
+import Cookies from "universal-cookie";
 import { TimeConverter } from "./Interfaces";
 import { priorityImages } from "./StaticData";
+
+export const cookies = new Cookies();
 
 export const capitalizeFirstLetter = (value: string): string => {
   return value.charAt(0).toUpperCase() + value.slice(1);
