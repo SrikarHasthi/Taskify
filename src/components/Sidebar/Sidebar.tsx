@@ -82,7 +82,7 @@ const Sidebar = ({ allTasksHistory }: Props) => {
                             <img src={question} alt="question" />
                         </span>
                         <Tooltip id="coming-soon-tooltip" data-tooltip-place="right-start" style={{ width: "13rem", background: "black" }}>
-                            Backend with Java Spring Boot with Login, Profile, Tasks History, Favourite tasks and many more..
+                            Favourite tasks and many more..
                             Stay Tuned
                         </Tooltip>
                     </p>
