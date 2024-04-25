@@ -15,6 +15,7 @@ import { useAuth } from "./AuthContext";
 import empty from './assets/empty.png';
 import { allTasksHistory } from "./Interfaces";
 import { ToastContainer, toast } from "react-toastify";
+import { cookies } from "./Utils";
 
 const Home: React.FC = () => {
     const [addTaskPopup, setAddTaskPopup] = useState<boolean>(false)
@@ -26,23 +27,26 @@ const Home: React.FC = () => {
     const userDetails = authContext.userData;
 
     useEffect(() => {
-        toast.success(`Welcome back ${userDetails.name}`, {
-            toastId: 'success1',
-        });
-    }, [userDetails])
+        if (!cookies.get("basic_auth"))
+            toast.success(`Welcome back ${userDetails.name}`, {
+                toastId: 'success1',
+            });
+    }, [])
 
     useEffect(() => {
-        retrieveAllTodohistory(userDetails.userId).then((res) => {
-            if (res && res.data) {
-                setAllTaskHistory(res.data);
-            }
-        })
-        retrieveTodayTodohistory(userDetails.userId).then((res) => {
-            if (res && res.data) {
-                dispatch(setTaskData(res.data.todos))
-            }
-        })
-    }, [])
+        if (userDetails && userDetails.email) {
+            retrieveAllTodohistory(userDetails.userId).then((res) => {
+                if (res && res.data) {
+                    setAllTaskHistory(res.data);
+                }
+            })
+            retrieveTodayTodohistory(userDetails.userId).then((res) => {
+                if (res && res.data) {
+                    dispatch(setTaskData(res.data.todos))
+                }
+            })
+        }
+    }, [userDetails])
 
     useEffect(() => {
         const currentDate = new Date();

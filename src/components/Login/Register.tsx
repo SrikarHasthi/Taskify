@@ -59,7 +59,6 @@ const Register = () => {
             setIsLoading(true);
             const payload: RegisterUserData = { name, password, email }
             registerUser(payload).then((res) => {
-                console.log(res && res.data);
                 toast.success('Registered successfully. Redirecting To Login..')
                 setTimeout(() => {
                     navigate('/')

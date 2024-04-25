@@ -61,7 +61,6 @@ const Tasks = ({ status }: Props) => {
 
         let updatedTask = newTaskData.find((e) => e.id === task.id);
 
-        console.log(updatedTask, newStatus, localStorageTime);
         if (updatedTask) {
             updateTodos(updatedTask.id, userDetails.userId, updatedTask).then((res) => {
                 if (res && res.data) {
